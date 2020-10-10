@@ -19,8 +19,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba4f8fa7-bd07-47c1-b127-92b5a5d4f80b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/test1.py" afterDir="false" />
+    <list default="true" id="ba4f8fa7-bd07-47c1-b127-92b5a5d4f80b" name="Default Changelist" comment="hx update test">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +37,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="JupyterTrust" id="67affa0a-10c9-49a8-afd3-44e107276a48" />
   <component name="ProjectId" id="1igdyXdFqp0budC26ibievo6Xvl" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -47,6 +48,14 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
   </component>
   <component name="RunManager">
     <configuration name="test1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -85,8 +94,21 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1602333423538</updated>
+      <workItem from="1602335515652" duration="661000" />
+      <workItem from="1602336194008" duration="1500000" />
     </task>
+    <task id="LOCAL-00001" summary="hx update test">
+      <created>1602335632257</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1602335632257</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -98,8 +120,21 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="hx update test" />
+    <option name="LAST_COMMIT_MESSAGE" value="hx update test" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="221" y="0" key="CommitChangelistDialog2" timestamp="1602335743825">
+      <screen x="0" y="0" width="1440" height="929" />
+    </state>
+    <state x="221" y="0" key="CommitChangelistDialog2/0.0.1440.929/2160.0.1920.1050@0.0.1440.929" timestamp="1602335743825" />
+    <state x="556" y="330" width="328" height="377" key="Github.ShareDialog" timestamp="1602336600564">
+      <screen x="0" y="0" width="1440" height="929" />
+    </state>
+    <state x="556" y="330" width="328" height="377" key="Github.ShareDialog/0.0.1440.929/2160.0.1920.1050@0.0.1440.929" timestamp="1602336600564" />
     <state width="1480" height="256" key="GridCell.Tab.0.bottom" timestamp="1602333502185">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
@@ -116,5 +151,13 @@
       <screen x="0" y="0" width="1500" height="960" />
     </state>
     <state width="1480" height="256" key="GridCell.Tab.0.right/0.0.1500.960@0.0.1500.960" timestamp="1602333502185" />
+    <state x="90" y="18" key="SettingsEditor" timestamp="1602338215079">
+      <screen x="0" y="0" width="1440" height="929" />
+    </state>
+    <state x="90" y="18" key="SettingsEditor/0.0.1440.929/2160.0.1920.1050@0.0.1440.929" timestamp="1602338215079" />
+    <state x="213" y="130" key="Vcs.Push.Dialog.v2" timestamp="1602338176452">
+      <screen x="0" y="0" width="1440" height="929" />
+    </state>
+    <state x="213" y="130" key="Vcs.Push.Dialog.v2/0.0.1440.929/2160.0.1920.1050@0.0.1440.929" timestamp="1602338176452" />
   </component>
 </project>
