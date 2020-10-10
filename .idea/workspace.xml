@@ -19,7 +19,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
     <list default="true" id="ba4f8fa7-bd07-47c1-b127-92b5a5d4f80b" name="Default Changelist" comment="hx update test">
+=======
+    <list default="true" id="ba4f8fa7-bd07-47c1-b127-92b5a5d4f80b" name="Default Changelist" comment="">
+>>>>>>> Stashed changes
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -48,6 +52,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+<<<<<<< Updated upstream
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -56,6 +61,9 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
+=======
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+>>>>>>> Stashed changes
   </component>
   <component name="RunManager">
     <configuration name="test1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -121,6 +129,7 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+<<<<<<< Updated upstream
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="hx update test" />
@@ -135,6 +144,14 @@
       <screen x="0" y="0" width="1440" height="929" />
     </state>
     <state x="556" y="330" width="328" height="377" key="Github.ShareDialog/0.0.1440.929/2160.0.1920.1050@0.0.1440.929" timestamp="1602336600564" />
+=======
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="532" y="222" key="FileChooserDialogImpl" timestamp="1602334292838">
+      <screen x="0" y="0" width="1500" height="960" />
+    </state>
+    <state x="532" y="222" key="FileChooserDialogImpl/0.0.1500.960@0.0.1500.960" timestamp="1602334292838" />
+>>>>>>> Stashed changes
     <state width="1480" height="256" key="GridCell.Tab.0.bottom" timestamp="1602333502185">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
