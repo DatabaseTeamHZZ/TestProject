@@ -10,7 +10,6 @@ Target Server Type    : MYSQL
 Target Server Version : 80019
 File Encoding         : 65001
 
-Date: 2020-10-29 20:17:12
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,7 +30,6 @@ CREATE TABLE `buyer` (
 -- ----------------------------
 -- Records of buyer
 -- ----------------------------
-INSERT INTO `buyer` VALUES ('1003', null, null);
 
 -- ----------------------------
 -- Table structure for cashier
@@ -49,7 +47,6 @@ CREATE TABLE `cashier` (
 -- ----------------------------
 -- Records of cashier
 -- ----------------------------
-INSERT INTO `cashier` VALUES ('1002', null, null);
 
 -- ----------------------------
 -- Table structure for customer
@@ -62,13 +59,14 @@ CREATE TABLE `customer` (
   `point` decimal(10,2) NOT NULL DEFAULT '0.00',
   `vip` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`customer_id`),
-  UNIQUE KEY `cstm_id` (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `cstm_id` (`customer_id`),
+  KEY `vip_level` (`vip`),
+  CONSTRAINT `vip_level` FOREIGN KEY (`vip`) REFERENCES `vip_discount` (`vip`)
+) ENGINE=InnoDB AUTO_INCREMENT=2001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of customer
 -- ----------------------------
-INSERT INTO `customer` VALUES ('1', '初始顾客', '12345', '1000.00', '1');
 
 -- ----------------------------
 -- Table structure for customer_point
@@ -82,14 +80,31 @@ CREATE TABLE `customer_point` (
   `way` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`order`),
   KEY `cstm_id` (`customer_id`),
-  CONSTRAINT `cstm_id` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `way_name` (`way`),
+  CONSTRAINT `cstm_id` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`),
+  CONSTRAINT `way_name` FOREIGN KEY (`way`) REFERENCES `get_point_way` (`way`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of customer_point
 -- ----------------------------
-INSERT INTO `customer_point` VALUES ('1', '1', '50.00', '2020-10-29 20:03:13', '1');
-INSERT INTO `customer_point` VALUES ('2', '1', '950.00', '2020-10-29 20:11:17', '2');
+
+-- ----------------------------
+-- Table structure for get_point_way
+-- ----------------------------
+DROP TABLE IF EXISTS `get_point_way`;
+CREATE TABLE `get_point_way` (
+  `way` int NOT NULL,
+  `way_name` varchar(20) NOT NULL,
+  PRIMARY KEY (`way`,`way_name`),
+  KEY `way` (`way`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of get_point_way
+-- ----------------------------
+INSERT INTO `get_point_way` VALUES ('1', '购买商品获得');
+INSERT INTO `get_point_way` VALUES ('2', '直接充值获得');
 
 -- ----------------------------
 -- Table structure for goods
@@ -103,13 +118,15 @@ CREATE TABLE `goods` (
   `quantity` int unsigned NOT NULL DEFAULT '0',
   `goods_type` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`goods_id`),
-  UNIQUE KEY `gds_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `gds_id` (`goods_id`),
+  KEY `gds_type` (`goods_type`),
+  CONSTRAINT `gds_type` FOREIGN KEY (`goods_type`) REFERENCES `goods_type_name` (`goods_type`)
+) ENGINE=InnoDB AUTO_INCREMENT=3001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of goods
 -- ----------------------------
-INSERT INTO `goods` VALUES ('1', '初始商品', '10.00', '5.00', '5', '0');
+
 
 -- ----------------------------
 -- Table structure for goods_type_name
@@ -118,7 +135,8 @@ DROP TABLE IF EXISTS `goods_type_name`;
 CREATE TABLE `goods_type_name` (
   `goods_type` int NOT NULL,
   `type_name` varchar(20) NOT NULL,
-  PRIMARY KEY (`goods_type`,`type_name`)
+  PRIMARY KEY (`goods_type`,`type_name`),
+  KEY `goods_type` (`goods_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
@@ -148,12 +166,11 @@ CREATE TABLE `purchase` (
   KEY `gds_id` (`goods_id`),
   CONSTRAINT `cst_id` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`),
   CONSTRAINT `gds_id` FOREIGN KEY (`goods_id`) REFERENCES `goods` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of purchase
 -- ----------------------------
-INSERT INTO `purchase` VALUES ('1', '1', '5', '2020-10-29 20:03:13', '50.00', '25.00', '4');
 
 -- ----------------------------
 -- Table structure for stock
@@ -170,12 +187,11 @@ CREATE TABLE `stock` (
   KEY `buyer_id` (`id`),
   CONSTRAINT `buyer_id` FOREIGN KEY (`id`) REFERENCES `buyer` (`id`),
   CONSTRAINT `g_id` FOREIGN KEY (`goods_id`) REFERENCES `goods` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of stock
 -- ----------------------------
-INSERT INTO `stock` VALUES ('1', '1', '1003', '10', '2020-10-29 20:02:00');
 
 -- ----------------------------
 -- Table structure for user
@@ -188,16 +204,32 @@ CREATE TABLE `user` (
   `if_logout` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `u_id` (`id`) USING BTREE,
-  KEY `u_type` (`user_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=1004 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `u_type` (`user_type`),
+  CONSTRAINT `type_name` FOREIGN KEY (`user_type`) REFERENCES `user_type_name` (`user_type`)
+) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('1000', '123', '1', '0');
-INSERT INTO `user` VALUES ('1001', '123', '1', '0');
-INSERT INTO `user` VALUES ('1002', '123', '2', '0');
-INSERT INTO `user` VALUES ('1003', '123', '3', '0');
+
+-- ----------------------------
+-- Table structure for user_type_name
+-- ----------------------------
+DROP TABLE IF EXISTS `user_type_name`;
+CREATE TABLE `user_type_name` (
+  `user_type` int NOT NULL,
+  `user_type_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`user_type`,`user_type_name`),
+  KEY `user_type` (`user_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of user_type_name
+-- ----------------------------
+INSERT INTO `user_type_name` VALUES ('1', '管理员');
+INSERT INTO `user_type_name` VALUES ('2', '收银员');
+INSERT INTO `user_type_name` VALUES ('3', '进货员');
 
 -- ----------------------------
 -- Table structure for vip_discount
