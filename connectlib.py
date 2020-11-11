@@ -348,7 +348,6 @@ def get_vip_sale_in_period(start_time, end_time):
         feedback = receive_from_server(feedback)
         return feedback
 
-
 #   7.查询特定商品的信息
 #   @get_single_goods_info
 #   功   能：通过goods_id查询单个商品的信息
