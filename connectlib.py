@@ -1,4 +1,5 @@
 import socket
+import time
 
 
 #   socket 连接库使用说明：
@@ -23,20 +24,19 @@ import socket
 def receive_from_server(sct):
     feedback = ''
     data_rx = sct.recv(1024)  # 消息的接收格式也应该是二进制
-    print('接收到消息：%s' % (data_rx.decode('utf8')))  # 接收完成后需要转码并且打印
+
     string2 = '%s' % (data_rx.decode('utf8'))  # 将接受到转码后的字符串返回
     if string2 == '0':
         return 0
-    while len(string2) == 500:
 
-        feedback = feedback + string2
+    while len(string2) == 566:
+        feedback += string2
 
         data_rx = sct.recv(1024)  # 消息的接收格式也应该是二进制
-        print('接收到消息：%s' % (data_rx.decode('utf8')))  # 接收完成后需要转码并且打印
         string2 = '%s' % (data_rx.decode('utf8'))  # 将接受到转码后的字符串返回
 
-    feedback = feedback + string2
-
+    feedback += string2
+    print('接收到消息：%s' % feedback)  # 接收完成后需要转码并且打印
     return feedback
 
 
@@ -84,7 +84,7 @@ def login_to_server(username, password):  # 接受用户名，密码字符串，
     string2 = '%s' % (data_rx.decode('utf8'))  # 将接受到转码后的字符串返回
     if string2 == '0':
         return 0
-    return 1
+    return int(string2)
 
 
 #   二、收银员
@@ -288,6 +288,7 @@ def get_customers_info():
 #               第一个元素为返回信息的总条数count
 #               此后有count组数据，每一组数据由四条数据组成
 #                   商品name 商品id 商品数量 进货时间
+#               失败 —— 0
 #
 #           例如：（以两条进货记录为例）
 #               ‘2 good_name1 id1 quantity1 time1 good_name2 id2 quantity2 time2’
@@ -306,6 +307,15 @@ def get_stock():
 #   功   能：查询一段时间内的销售情况    注——(start_time,end_time]
 #   参   数：1.odr —— 排序方式 0-按每种商品的总销售额降序
 #                           1-按每种商品的总利润降序
+#           2.goods_type 商品类别
+#                           -1  全部商品
+#                           0	未定义类
+#                           1	生活类
+#                           2	办公类
+#                           3	书籍类
+#                           4	电器类
+#                           5	饮食类
+#
 #           2.start_time —— 查询的起始时间 格式为字符串 'yyyy-mm-dd'
 #           3.end_time —— 查询结束时间 格式同上
 #   返回参数：一个字符串，元素由空格分割：格式为
@@ -314,12 +324,13 @@ def get_stock():
 #               第三个元素为总利润
 #               此后有count组数据,每组数据由五条数据组成
 #                   商品id 商品name 商品销量 商品销售额 商品利润
+#            失败 —— 0
 #
 #           例如：（以两条销售记录为例）
 #               '2 sum_all_payment sum_all_profit goods_id1 goods_name1 sum_quantity1 sum_payment1 sum_profit1\
 #                goods_id2 goods_name2 sum_quantity2 sum_payment2 sum_profit2'
-def get_sale_in_period(odr, start_time, end_time):
-    feedback = send_to_server(f'1 5 {odr} {start_time}-00:00:00 {end_time}-00:00:00')
+def get_sale_in_period(odr, goods_type, start_time, end_time):
+    feedback = send_to_server(f'1 5 {odr} {goods_type} {start_time}-00:00:00 {end_time}-00:00:00')
     if feedback == 0:
         return 0
     else:
@@ -347,6 +358,7 @@ def get_vip_sale_in_period(start_time, end_time):
     else:
         feedback = receive_from_server(feedback)
         return feedback
+
 
 #   7.查询特定商品的信息
 #   @get_single_goods_info
@@ -386,3 +398,78 @@ def modify_single_goods_info(goods_id, new_goods_name, new_price, new_cost, new_
         return feedback
 
 
+#   9.查询各种商品类型的在一定时间内的总利润排名
+#   @get_type_profit
+#   功   能：查询一段时间内各种商品类型的总利润排名   注——(start_time,end_time]
+#   参   数：1.start_time —— 查询的起始时间 格式为字符串 'yyyy-mm-dd'
+#           2.end_time —— 查询结束时间 格式同上
+#   返回参数：一个字符串，元素由空格分隔：格式为
+#               第一个元素为总商品种类数count
+#               此后共有count组数据每组数据由三条数据组成
+#                   名次 类型名称 该类型的总利润
+#
+def get_type_profit(start_time, end_time):
+    feedback = send_to_server(f'1 9 {start_time}-00:00:00 {end_time}-00:00:00')
+    if feedback == 0:
+        return 0
+    else:
+        feedback = receive_from_server(feedback)
+        return feedback
+
+
+#   10.查询所有顾客的在一定时间内的总消费排名
+#   @get_customer_consume_rank
+#   功   能：查询一段时间所有顾客内总消费排名  注——(start_time,end_time]
+#   参   数：1.start_time —— 查询的起始时间 格式为字符串 'yyyy-mm-dd'
+#           2.end_time —— 查询结束时间 格式同上
+#   返回参数：一个字符串，元素由空格分隔：格式为
+#               第一个元素为顾客总数count
+#               此后共有count组数据每组数据由三条数据组成
+#                   名次 顾客姓名 顾客id 该顾客总消费
+#
+def get_customer_consume_rank(start_time, end_time):
+    feedback = send_to_server(f'1 10 {start_time}-00:00:00 {end_time}-00:00:00')
+    if feedback == 0:
+        return 0
+    else:
+        feedback = receive_from_server(feedback)
+        return feedback
+
+
+#   11.查询一个特定的顾客的vip点获得记录
+#   @get_single_customer_point
+#   功   能：查询一个特定的顾客的vip点获得记录
+#   参   数：1.customer_id —— 顾客id
+#   返回参数：一个字符串，元素由空格分隔：格式为
+#               第一个元素为顾客记录总数count
+#               此后共有count组数据每组数据由三条数据组成
+#                   时间 获得点数 获得方式名称
+#
+def get_single_customer_point(customer_id):
+    feedback = send_to_server(f'1 11 {customer_id}')
+    if feedback == 0:
+        return 0
+    else:
+        feedback = receive_from_server(feedback)
+        return feedback
+
+
+#   12.查询某一未注销员工的个人信息
+#   @get_single_staff_info
+#   功   能：查询某一未注销员工的个人信息
+#   参   数：1.id —— 工作人员id
+#   返回参数：一个字符串，元素由空格分隔：格式为
+#               第一个元素为员工记录总数count
+#               此后共有count组数据每组数据由三条数据组成
+#                   姓名 电话 身份名称
+#
+def get_single_staff_info(id):
+    feedback = send_to_server(f'1 12 {id}')
+    if feedback == 0:
+        return 0
+    else:
+        feedback = receive_from_server(feedback)
+        return feedback
+
+
+print(get_single_staff_info(1000))

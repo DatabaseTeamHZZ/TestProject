@@ -1,5 +1,6 @@
 import socket
 import time
+
 import buyer
 import cashier
 import login
@@ -97,34 +98,47 @@ while True:
                     feedback = administrator.get_customer()
                 if msg[1] == '4':
                     feedback = administrator.get_stock()
-                if msg[1] == '5':           # 查询一段时间内的销售情况msg[2]=0,销售额降序,msg[2]=1,利润降序,3,4起止时间
-                    feedback = administrator.get_sale(msg[2], msg[3], msg[4])
-                if msg[1] == '6':           # 查询一段时间内的VIP购物记录,msg[3],msg[4]起止时间。按用户VIP等级,id降序
+                if msg[1] == '5':  # 查询一段时间内的销售情况msg[2]=0,销售额降序,msg[2]=1,利润降序,3,4起止时间
+                    feedback = administrator.get_sale(msg[2], msg[3], msg[4], msg[5])
+                if msg[1] == '6':  # 查询一段时间内的VIP购物记录,msg[3],msg[4]起止时间。按用户VIP等级,id降序
                     feedback = administrator.get_vip_purchase(msg[2], msg[3])
                 if msg[1] == '7':
                     feedback = administrator.get_single_goods_info(msg[2])
                 if msg[1] == '8':
                     feedback = administrator.modify_single_goods_info(msg[2], msg[3], msg[4], msg[5], msg[6])
+                if msg[1] == '9':
+                    feedback = administrator.get_every_type_sum_profit(msg[2], msg[3])
+                if msg[1] == '10':
+                    feedback = administrator.get_every_customer_sum_payment(msg[2], msg[3])
+                if msg[1] == '11':
+                    feedback = administrator.get_single_customer_point(msg[2])
+                if msg[1] == '12':
+                    feedback = administrator.get_single_staff_info(msg[2])
+
         except Exception:
             feedback = 0
-        feedback = str(feedback)
 
+        # feedback = ''
+        # for j in range(0, 1000):
+        #     feedback += '1'
+        feedback = str(feedback)
         # 回显消息给客户端
         temp = ''
-        print(f'server give {feedback} back')
+        print(f'server give \n  {feedback} \n  back')
         lt = list(feedback)
-        while len(feedback) >= 500:
-            for i in range(0, 500):
+        while len(feedback) > 566:
+            for i in range(0, 566):
                 temp += feedback[i]
             data_tx = bytes('%s' % temp, encoding='utf8')  # 编码为二进制文件
-            connect.send(data_tx)  # 发送
+            connect.send(data_tx)  #
 
-            temp = ''                               # 重构 feedback 与 q
+            temp = ''  # 重构 feedback 与 q
             q = ''
-            for j in range(500, len(feedback)):
+            for j in range(566, len(feedback)):
                 q += feedback[j]
             feedback = q
             q = ''
+
         data_tx = bytes('%s' % feedback, encoding='utf8')  # 编码为二进制文件
         connect.send(data_tx)  # 发送
         time.sleep(0.5)  # 休眠的函数需要导入 import time
