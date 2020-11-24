@@ -7,7 +7,7 @@ import pickle
 # ↓请修改数据库基本信息↓
 host = "127.0.0.1"
 host_name = "root"
-host_password = "hanxu1125"
+host_password = ""
 database = "b1"
 
 

@@ -35,7 +35,7 @@ def showAllSale(odr, goods_type=-1, start_time='0000-00-00 00:00:00', end_time='
         tv.delete(item)
     start_time = '\'' + start_time + '\''
     end_time = '\'' + end_time + '\''
-    db = pymysql.connect(user='root', password='hanxu1125', database='b1', charset='utf8')
+    db = pymysql.connect(user='root', password='', database='b1', charset='utf8')
     cursor = db.cursor()
     tp = ''
     if goods_type != -1:
