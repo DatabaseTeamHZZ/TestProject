@@ -3,7 +3,7 @@ import pymysql
 # ↓请修改数据库基本信息↓
 host = "127.0.0.1"
 host_name = "root"
-host_password = ""
+host_password = "hanxu1125"
 database = "b1"
 
 
@@ -26,7 +26,7 @@ def change_password(id1, old_password, new_password):
             cursor.execute(sql2)
             db.commit()
         except Exception:
-            return 0
+            return result
         result = 1              # Modified
         print(f"{id1}修改密码成功!")
     db.close()

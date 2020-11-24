@@ -227,6 +227,7 @@ def stock(goods_id, id1, quantity):
         return feedback
 
 
+
 #   四、管理员
 #   1.注册账号，不返回1/0，因为一定成功，返回id
 #   @register
@@ -471,5 +472,4 @@ def get_single_staff_info(id):
         feedback = receive_from_server(feedback)
         return feedback
 
-
-print(get_single_staff_info(1000))
+# print(get_single_staff_info(1000))

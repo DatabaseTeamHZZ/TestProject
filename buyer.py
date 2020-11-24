@@ -3,7 +3,7 @@ import pymysql
 # ↓请修改数据库基本信息↓
 host = "127.0.0.1"
 host_name = "root"
-host_password = ""
+host_password = "hanxu1125"
 database = "b1"
 
 
@@ -16,14 +16,14 @@ def change_password(id, old_password, new_password):
     res = cursor.fetchone()
     if old_password != res[0]:
         print("原密码输入错误!")
-        return 0        # Modified
+        return 0  # Modified
     else:
         sql2 = "update user set password='{}' where id='{}'".format(new_password, str(id))
         cursor.execute(sql2)
         db.commit()
         print("修改密码成功!")
     db.close()
-    return 1            # Modified
+    return 1  # Modified
 
 
 # 2.修改个人身份信息
@@ -69,3 +69,23 @@ def stock(good_id, id, quantity):
     db.commit()
     print("进货员id={}进货成功".format(str(id)))
     db.close()
+
+
+# 5.查看商品信息
+def get_inventory(goods_id):
+    db = pymysql.connect(host, host_name, host_password, database)
+    cursor = db.cursor()
+    sql = f"select goods_name,price,cost,quantity from goods where goods_id={goods_id}"
+    cursor.execute(sql)
+    res = cursor.fetchall()
+    count = 0
+    feedback = ''  # feedback = goods_name price cost quantity
+    for row in res:
+        print("goods_name={}\tprice={}\tcost={}\tquantity={}".format(row[0], row[1], row[2], row[3]))
+        feedback = feedback + "{} {} {} {} ".format(row[0], row[1], row[2], row[3])  # goods_name,price,cost,quantity
+        count = count + 1
+    if count == 0:
+        db.close()
+        return 0
+    db.close()
+    return feedback

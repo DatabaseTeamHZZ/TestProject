@@ -12,10 +12,11 @@ import connectlib
 
 host = "127.0.0.1"
 host_name = "root"
-host_password = ""
+host_password = "hanxu1125"
 database = "b1"
 
 type_user = -1  # 用户类型
+uid = ''
 
 
 # 登陆界面
@@ -26,6 +27,7 @@ class MY_GUI():
     def click_login(self):
         name = self.entry_usr_name.get()
         password = self.entry_usr_pwd.get()
+        self.userid = name
         self.user_type = connectlib.login_to_server(name, password)
 
     def login_window(self):
@@ -45,7 +47,7 @@ class MY_GUI():
         self.entry_usr_pwd.place(x=120, y=100)
         self.user_id = -1
         # login 按钮
-        self.btn_login = tk.Button(self.window, text='Login', command=self.click_login)
+        self.btn_login = tk.Button(self.window, text='登录', command=self.click_login)
         self.btn_login.place(x=170, y=150)
         # 主窗口循环显示
         self.window.mainloop()
@@ -55,7 +57,9 @@ def login_start():
     run = MY_GUI()  # 传入TK窗口
     run.login_window()  # 设置根窗口默认属性
     global type_user
+    global uid
     type_user = run.user_type
+    uid = run.userid
 
 
 if __name__ == '__main__':  # 如果是命令行直接运行则开始运行，否则不执行
@@ -64,7 +68,7 @@ if __name__ == '__main__':  # 如果是命令行直接运行则开始运行，�
 
 # 主界面
 root = Tk()
-root.title('欢迎来到商品管理系统')  # 主界面名称
+root.title('欢迎来到商品进销管理系统')  # 主界面名称
 root.geometry('800x400+100+100')
 
 tab_main = ttk.Notebook()  # 创建分页栏
@@ -95,10 +99,10 @@ tab_main.add(tab5, text='添加顾客')  # 将第一页插入分页栏中
 ##########
 
 # 1，更改密码：
-tk.Label(tab1, text='请输入 id:', font=('Arial', 13)).place(x=50, y=40)
-cashier_id = tk.StringVar()
-cashier_name = tk.Entry(tab1, textvariable=cashier_id, font=('Arial', 14))
-cashier_name.place(x=200, y=40)
+# tk.Label(tab1, text='请输入 id:', font=('Arial', 13)).place(x=50, y=40)
+# cashier_id = tk.StringVar()
+# cashier_name = tk.Entry(tab1, textvariable=cashier_id, font=('Arial', 14))
+# cashier_name.place(x=200, y=40)
 tk.Label(tab1, text='请输入旧密码:', font=('Arial', 13)).place(x=50, y=90)
 cashier_old_pwd = tk.StringVar()
 enter_old_pwd = tk.Entry(tab1, textvariable=cashier_old_pwd, font=('Arial', 14), show='*')
@@ -108,15 +112,15 @@ cashier_new_pwd = tk.StringVar()
 enter_new_pwd = tk.Entry(tab1, textvariable=cashier_new_pwd, font=('Arial', 14), show='*')
 enter_new_pwd.place(x=200, y=140)
 change_pwd_btn = tk.Button(tab1, text='修改密码',
-                           command=lambda: connectlib.modify_account_password(cashier_name.get(), enter_old_pwd.get(),
+                           command=lambda: connectlib.modify_account_password(uid, enter_old_pwd.get(),
                                                                               enter_new_pwd.get()))
 change_pwd_btn.place(x=270, y=180)
 
 # 2，修改个人信息
-tk.Label(tab2, text='请输入id:', font=('Arial', 13)).place(x=50, y=40)
-cashier_cname = tk.StringVar()
-enter_name = tk.Entry(tab2, textvariable=cashier_cname, font=('Arial', 14))
-enter_name.place(x=200, y=40)
+# tk.Label(tab2, text='请输入id:', font=('Arial', 13)).place(x=50, y=40)
+# cashier_cname = tk.StringVar()
+# enter_name = tk.Entry(tab2, textvariable=cashier_cname, font=('Arial', 14))
+# enter_name.place(x=200, y=40)
 tk.Label(tab2, text='请输入新用户名:', font=('Arial', 13)).place(x=50, y=90)
 cashier_new_name = tk.StringVar()
 enter_new_name = tk.Entry(tab2, textvariable=cashier_new_name, font=('Arial', 14))
@@ -126,7 +130,7 @@ cashier_new_phone = tk.StringVar()
 enter_new_phone = tk.Entry(tab2, textvariable=cashier_new_phone, font=('Arial', 14))
 enter_new_phone.place(x=200, y=140)
 change_info_btn = tk.Button(tab2, text='修改个人信息',
-                            command=lambda: connectlib.modify_cashier_info(enter_name.get(), enter_new_name.get(),
+                            command=lambda: connectlib.modify_cashier_info(uid, enter_new_name.get(),
                                                                            enter_new_phone.get()))
 change_info_btn.place(x=255, y=180)
 
@@ -187,16 +191,19 @@ tab_main.add(tab8, text='添加商品信息')
 tab9 = Frame(tab_main)
 tab9.place(x=30, y=30)
 tab_main.add(tab9, text='进货')
+tab22 = Frame(tab_main)
+tab22.place(x=30, y=30)
+tab_main.add(tab22, text='查看商品库存')
 
 ##########
 # 进 货 员 界 面 #
 ##########
 
 # 1，修改密码
-tk.Label(tab6, text='请输入 id:', font=('Arial', 13)).place(x=50, y=40)
-buyer_id = tk.StringVar()
-enter_buyer_id = tk.Entry(tab6, textvariable=buyer_id, font=('Arial', 14))
-enter_buyer_id.place(x=200, y=40)
+# tk.Label(tab6, text='请输入 id:', font=('Arial', 13)).place(x=50, y=40)
+# buyer_id = tk.StringVar()
+# enter_buyer_id = tk.Entry(tab6, textvariable=buyer_id, font=('Arial', 14))
+# enter_buyer_id.place(x=200, y=40)
 tk.Label(tab6, text='请输入旧密码:', font=('Arial', 13)).place(x=50, y=90)
 buyer_old_pwd = tk.StringVar()
 enter_buyer_old_pwd = tk.Entry(tab6, textvariable=buyer_old_pwd, font=('Arial', 14), show='*')
@@ -206,16 +213,16 @@ buyer_new_pwd = tk.StringVar()
 enter_buyer_new_pwd = tk.Entry(tab6, textvariable=buyer_new_pwd, font=('Arial', 14), show='*')
 enter_buyer_new_pwd.place(x=200, y=140)
 change_buyer_pwd_btn = tk.Button(tab6, text='修改密码',
-                                 command=lambda: connectlib.modify_account_password(enter_buyer_id.get(),
+                                 command=lambda: connectlib.modify_account_password(uid,
                                                                                     enter_buyer_old_pwd.get(),
                                                                                     enter_buyer_new_pwd.get()))
 change_buyer_pwd_btn.place(x=270, y=170)
 
 # 2，修改个人信息
-tk.Label(tab7, text='请输入id:', font=('Arial', 13)).place(x=50, y=40)
-buyer_cname = tk.StringVar()
-enter_buyer_name = tk.Entry(tab7, textvariable=buyer_cname, font=('Arial', 14))
-enter_buyer_name.place(x=200, y=40)
+# tk.Label(tab7, text='请输入id:', font=('Arial', 13)).place(x=50, y=40)
+# buyer_cname = tk.StringVar()
+# enter_buyer_name = tk.Entry(tab7, textvariable=buyer_cname, font=('Arial', 14))
+# enter_buyer_name.place(x=200, y=40)
 tk.Label(tab7, text='请输入新用户名:', font=('Arial', 13)).place(x=50, y=90)
 buyer_new_name = tk.StringVar()
 enter_buyer_new_name = tk.Entry(tab7, textvariable=buyer_new_name, font=('Arial', 14))
@@ -225,7 +232,7 @@ buyer_new_phone = tk.StringVar()
 enter_buyer_new_phone = tk.Entry(tab7, textvariable=buyer_new_phone, font=('Arial', 14))
 enter_buyer_new_phone.place(x=200, y=140)
 change_buyer_info_btn = tk.Button(tab7, text='修改个人信息',
-                                  command=lambda: connectlib.modify_buyer_info(enter_buyer_name.get(),
+                                  command=lambda: connectlib.modify_buyer_info(uid,
                                                                                enter_buyer_new_name.get(),
                                                                                enter_buyer_new_phone.get()))
 change_buyer_info_btn.place(x=255, y=170)
@@ -269,6 +276,40 @@ add_goods_quantity_btn = tk.Button(tab9, text='添加商品',
                                    command=lambda: connectlib.stock(enter_goods_id2.get(), enter_buyer_id2.get(),
                                                                     enter_add_goods_quantity.get()))
 add_goods_quantity_btn.place(x=280, y=180)
+
+
+def showAllGoods():
+    x = tv.get_children()
+    for item in x:
+        tv.delete(item)
+    con = pymysql.connect(user='root', password='hanxu1125', database='b1', charset='utf8')
+    cur = con.cursor()
+    cur.execute("select * from goods")
+    lst = cur.fetchall()
+    for item in lst:
+        tv.insert("", 1, text="line1", values=item)
+    cur.close()
+    con.close()
+
+
+# 5，查看商品库存
+# tk.Label(tab22, text='商品id:', font=('Arial', 13)).place(x=50, y=40)
+# goods_id4 = tk.StringVar()
+# enter_goods_id4 = tk.Entry(tab22, textvariable=goods_id4, font=('Arial', 14))
+# enter_goods_id4.place(x=200, y=40)
+btn = ttk.Button(tab22, text="显示库存", command=showAllGoods).place(x=270, y=80)
+
+tv = ttk.Treeview(tab22, show='headings', column=('goods_id', 'goods_name', 'cost', 'quantity'))
+tv.column('goods_id', width=150, anchor="center")
+tv.column('goods_name', width=150, anchor="center")
+tv.column('cost', width=150, anchor="center")
+tv.column('quantity', width=150, anchor="center")
+
+tv.heading('goods_id', text='商品号')
+tv.heading('goods_name', text='商品名称')
+tv.heading('cost', text='成本')
+tv.heading('quantity', text='库存')
+tv.place(rely=0.35, relwidth=1, relheight=0.6)
 
 tab10 = Frame(tab_main)  # 管理员界面
 tab10.place(x=30, y=30)
@@ -332,15 +373,72 @@ enter_logout_id.place(x=200, y=40)
 logout_user_btn = tk.Button(tab11, text='注销用户', command=lambda: connectlib.logout(enter_logout_id.get()))
 logout_user_btn.place(x=270, y=80)
 
+
 # 3，查看用户信息
-get_customer_btn = tk.Button(tab12, text='用户信息', command=connectlib.get_customers_info)
-get_customer_btn.place(x=200, y=100)
+def showAllCustomer():
+    x1 = tv1.get_children()
+    for item in x1:
+        tv1.delete(item)
+    con1 = pymysql.connect(user='root', password='hanxu1125', database='b1', charset='utf8')
+    cur1 = con1.cursor()
+    cur1.execute("select * from customer")
+    lst1 = cur1.fetchall()
+    for item1 in lst1:
+        tv1.insert("", 1, text="line1", values=item1)
+    cur1.close()
+    con1.close()
+
+
+tv1 = ttk.Treeview(tab12, show='headings', column=('customer_id', 'customer_name', 'phone', 'point', 'vip'))
+tv1.column('customer_id', width=150, anchor="center")
+tv1.column('customer_name', width=150, anchor="center")
+tv1.column('phone', width=150, anchor="center")
+tv1.column('point', width=150, anchor="center")
+tv1.column('vip', width=150, anchor="center")
+
+tv1.heading('customer_id', text='客户id')
+tv1.heading('customer_name', text='客户姓名')
+tv1.heading('phone', text='手机')
+tv1.heading('point', text='积分')
+tv1.heading('vip', text='VIP')
+tv1.place(rely=0.15, relwidth=1, relheight=0.8)
+get_customer_btn = tk.Button(tab12, text='查看所有顾客信息', command=showAllCustomer)
+get_customer_btn.place(x=200, y=20, width=100)
+
 
 # 4，查看进货信息
-get_stock_btn = tk.Button(tab13, text='进货信息', command=connectlib.get_stock)
-get_stock_btn.place(x=350, y=100)
+def showAllStock():
+    x2 = tv2.get_children()
+    for item2 in x2:
+        tv2.delete(item2)
+    con2 = pymysql.connect(user='root', password='hanxu1125', database='b1', charset='utf8')
+    cur2 = con2.cursor()
+    cur2.execute("select * from stock")
+    lst2 = cur2.fetchall()
+    for item3 in lst2:
+        tv2.insert("", 1, text="line1", values=item3)
+    cur2.close()
+    con2.close()
+
+
+tv2 = ttk.Treeview(tab13, show='headings', column=('order', 'goods_id', 'id', 'quantity', 'time'))
+tv2.column('order', width=150, anchor="center")
+tv2.column('goods_id', width=150, anchor="center")
+tv2.column('id', width=150, anchor="center")
+tv2.column('quantity', width=150, anchor="center")
+tv2.column('time', width=150, anchor="center")
+
+tv2.heading('order', text='顺序')
+tv2.heading('goods_id', text='商品id')
+tv2.heading('id', text='进货员')
+tv2.heading('quantity', text='数量')
+tv2.heading('time', text='时间')
+tv2.place(rely=0.15, relwidth=1, relheight=0.8)
+get_stock_btn = tk.Button(tab13, text='查看进货信息', command=showAllStock)
+get_stock_btn.place(x=350, y=20, width=200)
 
 # 5，查询销售情况
+gtype = -1
 tk.Label(tab14, text='排序方式:', font=('Arial', 13)).place(x=50, y=40)
 odr = tk.StringVar()
 enter_odr = tk.Entry(tab14, textvariable=odr, font=('Arial', 14))
@@ -353,9 +451,10 @@ tk.Label(tab14, text='截止时间:', font=('Arial', 13)).place(x=50, y=140)
 end_time = tk.StringVar()
 enter_end_time = tk.Entry(tab14, textvariable=end_time, font=('Arial', 14))
 enter_end_time.place(x=200, y=140)
-get_sale_btn = tk.Button(tab14, text='查询销售情况',
-                         command=lambda: connectlib.get_sale_in_period(enter_odr.get(), enter_start_time.get(),
-                                                                       enter_end_time.get()))
+get_sale_btn = tk.Button(tab14, text='查询销售情况', command=lambda: connectlib.get_sale_in_period(0, 2, '2020-02-02', '2020-09-09'))
+
+
+
 get_sale_btn.place(x=270, y=180)
 
 # 6，查询VIP交易
@@ -452,7 +551,7 @@ tk.Label(tab21, text='用户id:', font=('Arial', 13)).place(x=50, y=40)
 customer_id3 = tk.StringVar()
 enter_customer_id3 = tk.Entry(tab21, textvariable=customer_id3, font=('Arial', 14))
 enter_customer_id3.place(x=200, y=40)
-get_info_btn = tk.Button(tab21, text='查询vip点',
+get_info_btn = tk.Button(tab21, text='个人信息',
                          command=lambda: connectlib.get_single_staff_info(enter_customer_id3.get()))
 get_info_btn.place(x=270, y=80)
 
@@ -467,11 +566,13 @@ if type_user == 1:
     tab7.destroy()
     tab8.destroy()
     tab9.destroy()
+    tab22.destroy()
 elif type_user == 2:
     tab6.destroy()
     tab7.destroy()
     tab8.destroy()
     tab9.destroy()
+    tab22.destroy()
     tab10.destroy()
     tab11.destroy()
     tab12.destroy()
