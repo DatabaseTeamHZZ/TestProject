@@ -239,25 +239,25 @@ change_buyer_info_btn.place(relx=0.45, rely=0.6)
 
 # 3，添加商品
 tk.Label(tab8, text='请输入商品名称:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.2)
-goods_name = tk.StringVar()
-enter_goods_name = tk.Entry(tab8, textvariable=goods_name, font=('潮字社国风冉宋简-闪', 16))
-enter_goods_name.place(relx=0.46, rely=0.2)
+goods_name0 = tk.StringVar()
+enter_goods_name0 = tk.Entry(tab8, textvariable=goods_name0, font=('潮字社国风冉宋简-闪', 16))
+enter_goods_name0.place(relx=0.46, rely=0.2)
 tk.Label(tab8, text='请输入商品售价:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.35)
-goods_price = tk.StringVar()
-enter_goods_price = tk.Entry(tab8, textvariable=goods_price, font=('潮字社国风冉宋简-闪', 16))
-enter_goods_price.place(relx=0.46, rely=0.35)
+goods_price0 = tk.StringVar()
+enter_goods_price0 = tk.Entry(tab8, textvariable=goods_price0, font=('潮字社国风冉宋简-闪', 16))
+enter_goods_price0.place(relx=0.46, rely=0.35)
 tk.Label(tab8, text='请输入商品成本:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.5)
-goods_cost = tk.StringVar()
-enter_goods_cost = tk.Entry(tab8, textvariable=goods_cost, font=('潮字社国风冉宋简-闪', 16))
-enter_goods_cost.place(relx=0.46, rely=0.5)
+goods_cost0 = tk.StringVar()
+enter_goods_cost0 = tk.Entry(tab8, textvariable=goods_cost0, font=('潮字社国风冉宋简-闪', 16))
+enter_goods_cost0.place(relx=0.46, rely=0.5)
 tk.Label(tab8, text='请输入商品类型:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.65)
-goods_type = tk.StringVar()
-enter_goods_type = tk.Entry(tab8, textvariable=goods_type, font=('潮字社国风冉宋简-闪', 16))
-enter_goods_type.place(relx=0.46, rely=0.65)
-add_goods_btn = tk.Button(tab8, text='添加商品', font=('潮字社国风冉宋简-闪', 16),
-                          command=lambda: connectlib.create_new_goods(enter_goods_name.get(), enter_goods_price.get(),
-                                                                      enter_goods_cost.get(), enter_goods_type.get()))
-add_goods_btn.place(relx=0.45, rely=0.8)
+goods_type0 = tk.StringVar()
+enter_goods_type0 = tk.Entry(tab8, textvariable=goods_type0, font=('潮字社国风冉宋简-闪', 16))
+enter_goods_type0.place(relx=0.46, rely=0.65)
+add_goods_btn0 = tk.Button(tab8, text='添加商品', font=('潮字社国风冉宋简-闪', 16),
+                          command=lambda: connectlib.create_new_goods(enter_goods_name0.get(), enter_goods_price0.get(),
+                                                                      enter_goods_cost0.get(), enter_goods_type0.get()))
+add_goods_btn0.place(relx=0.45, rely=0.8)
 
 # 4，进货
 tk.Label(tab9, text='请输入商品id:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.2)

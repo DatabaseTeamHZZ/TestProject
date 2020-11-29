@@ -90,8 +90,7 @@ while True:
                     if int(msg[5]) > 5 or int(msg[5]) < 0:  # 创建商品信息 ,返回商品id
                         feedback = 0  # 商品类别的合法性鉴定
                     else:  # x = 3——goods_name, price, cost, goods_type
-                        feedback = buyer.new_goods(
-                            msg[2], msg[3], msg[4], msg[5])
+                        feedback = buyer.new_goods(msg[2], msg[3], msg[4], msg[5])
                 if msg[1] == '4':  # 进货（要求所进货物已经被创建）
                     # x = 4——goods_id, id, quantity
                     buyer.stock(msg[2], msg[3], msg[4])
