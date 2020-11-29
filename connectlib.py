@@ -1,5 +1,6 @@
 import socket
 import time
+import  tkinter
 
 
 #   socket 连接库使用说明：
@@ -21,6 +22,9 @@ import time
 #   参   数：1.sct —— 已经建立连接的socket对象
 #   返回参数：失败 —— 0
 #           成功 —— 相应内容或1
+import tkinter
+
+
 def receive_from_server(sct):
     feedback = ''
     data_rx = sct.recv(1024)  # 消息的接收格式也应该是二进制
@@ -83,6 +87,7 @@ def login_to_server(username, password):  # 接受用户名，密码字符串，
     print('接收到消息：%s' % (data_rx.decode('utf8')))  # 接收完成后需要转码并且打印
     string2 = '%s' % (data_rx.decode('utf8'))  # 将接受到转码后的字符串返回
     if string2 == '0':
+        print(tkinter.messagebox.showerror(title='出错啦', message='密码或用户名不正确！'))  # 提出错误对话窗
         return 0
     return int(string2)
 

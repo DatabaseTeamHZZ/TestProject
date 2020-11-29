@@ -10,7 +10,7 @@ import pymysql
 # ↓请修改数据库基本信息↓
 host = "127.0.0.1"
 host_name = "root"
-host_password = ""
+host_password = "hanxu1125"
 database = "b1"
 
 
@@ -102,7 +102,7 @@ def get_sale(odr, goods_type=-1, start_time='0000-00-00 00:00:00', end_time='220
     cursor = db.cursor()
 
     order = ''
-    if odr == 0:
+    if odr == 0 or odr == '0':
         order = 'order by sum_payment desc'
     else:
         order = 'order by sum_profit desc'
@@ -110,6 +110,8 @@ def get_sale(odr, goods_type=-1, start_time='0000-00-00 00:00:00', end_time='220
     tp = ''
     if goods_type != -1:
         tp = 'and goods_type={}'.format(goods_type)
+    if goods_type == '-1':
+        tp = ''
 
     # 两张表的quantity重名了。。。
     sql = "select goods_id, goods_name,sum(purchase.quantity) sum_quantity, sum(payment) sum_payment, sum(profit) " \
@@ -162,6 +164,7 @@ def get_vip_purchase(start_time='0000-00-00 00:00:00', end_time='2200-00-00 23:5
         db.close()
         return 0
     feedback = f"{count} " + feedback
+    # print(feedback)
     db.close()
     return feedback
 

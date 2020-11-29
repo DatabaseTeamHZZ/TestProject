@@ -7,7 +7,7 @@ import pickle
 # ↓请修改数据库基本信息↓
 host = "127.0.0.1"
 host_name = "root"
-host_password = ""
+host_password = "hanxu1125"
 database = "b1"
 
 
@@ -20,10 +20,13 @@ def login_check(name, password):
     res = cursor.fetchone()
     user_type = 0  # 如果最终user_type仍然为0，说明登陆失败
     if res is None:
+        # print(tkinter.messagebox.showerror(title='出错啦', message='无此用户！'))  # 提出错误对话窗
         print("无此用户！")
     elif res[0] != password:
+        # print(tkinter.messagebox.showerror(title='出错啦', message='密码错误！'))  # 提出错误对话窗
         print("密码错误！")
     elif res[2] == 1:
+        # print(tkinter.messagebox.showerror(title='出错啦', message='该用户已注销！'))  # 提出错误对话窗
         print("该用户已被注销！")
     else:
         user_type = res[1]  # 登陆成功后获取用户身份
