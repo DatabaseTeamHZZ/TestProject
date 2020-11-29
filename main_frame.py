@@ -29,6 +29,9 @@ class MY_GUI():
         password = self.entry_usr_pwd.get()
         self.userid = name
         self.user_type = connectlib.login_to_server(name, password)
+        if(self.user_type!=0):
+            self.window.destroy()
+
 
     def login_window(self):
         self.window = tk.Tk()
@@ -64,6 +67,8 @@ def login_start():
 
 if __name__ == '__main__':  # 如果是命令行直接运行则开始运行，否则不执行
     login_start()
+
+
 ################################################
 
 # 主界面
@@ -206,7 +211,7 @@ tab_main.add(tab22, text='查看商品库存')
 # enter_buyer_id.place(x=200, y=40)
 tk.Label(tab6, text='请输入旧密码:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.2)
 buyer_old_pwd = tk.StringVar()
-enter_buyer_old_pwd = tk.Entry(tab6, textvariable=buyer_old_pwd, font=('潮字社国风冉宋简-闪', 16))
+enter_buyer_old_pwd = tk.Entry(tab6, textvariable=buyer_old_pwd, font=('潮字社国风冉宋简-闪', 16), show='*')
 enter_buyer_old_pwd.place(relx=0.46, rely=0.2)
 tk.Label(tab6, text='请输入新密码:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.4)
 buyer_new_pwd = tk.StringVar()
@@ -255,8 +260,10 @@ goods_type0 = tk.StringVar()
 enter_goods_type0 = tk.Entry(tab8, textvariable=goods_type0, font=('潮字社国风冉宋简-闪', 16))
 enter_goods_type0.place(relx=0.46, rely=0.65)
 add_goods_btn0 = tk.Button(tab8, text='添加商品', font=('潮字社国风冉宋简-闪', 16),
-                          command=lambda: connectlib.create_new_goods(enter_goods_name0.get(), enter_goods_price0.get(),
-                                                                      enter_goods_cost0.get(), enter_goods_type0.get()))
+                           command=lambda: connectlib.create_new_goods(enter_goods_name0.get(),
+                                                                       enter_goods_price0.get(),
+                                                                       enter_goods_cost0.get(),
+                                                                       enter_goods_type0.get()))
 add_goods_btn0.place(relx=0.45, rely=0.8)
 
 # 4，进货
