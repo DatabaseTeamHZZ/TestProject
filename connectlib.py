@@ -1,6 +1,6 @@
 import socket
 import time
-import  tkinter
+import tkinter
 
 
 #   socket 连接库使用说明：

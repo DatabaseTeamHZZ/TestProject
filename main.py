@@ -3,6 +3,7 @@ import buyer
 import cashier
 import login
 
+
 id = int(input("账号： "))
 password = input("密码： ")
 user_type = login.login_check(id, password)

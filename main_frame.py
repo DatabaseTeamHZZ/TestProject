@@ -12,7 +12,7 @@ import connectlib
 
 # host = "127.0.0.1"
 # host_name = "root"
-# host_password = "hanxu1125"
+# host_password = ""
 # database = "b1"
 
 type_user = -1  # 用户类型
