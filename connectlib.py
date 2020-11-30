@@ -331,7 +331,7 @@ def get_stock():
 #               此后有count组数据,每组数据由五条数据组成
 #                   商品id 商品name 商品销量 商品销售额 商品利润
 #            失败 —— 0
-#
+# 
 #           例如：（以两条销售记录为例）
 #               '2 sum_all_payment sum_all_profit goods_id1 goods_name1 sum_quantity1 sum_payment1 sum_profit1\
 #                goods_id2 goods_name2 sum_quantity2 sum_payment2 sum_profit2'

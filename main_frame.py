@@ -29,9 +29,8 @@ class MY_GUI():
         password = self.entry_usr_pwd.get()
         self.userid = name
         self.user_type = connectlib.login_to_server(name, password)
-        if(self.user_type!=0):
+        if (self.user_type != 0):
             self.window.destroy()
-
 
     def login_window(self):
         self.window = tk.Tk()
@@ -67,7 +66,6 @@ def login_start():
 
 if __name__ == '__main__':  # 如果是命令行直接运行则开始运行，否则不执行
     login_start()
-
 
 ################################################
 
@@ -389,7 +387,7 @@ def showAllCustomer():
     x1 = tv1.get_children()
     for item in x1:
         tv1.delete(item)
-    con1 = pymysql.connect(user='root', password='hanxu1125', database='b1', charset='utf8')
+    con1 = pymysql.connect(host, host_name, host_password, database)
     cur1 = con1.cursor()
     cur1.execute("select * from customer")
     lst1 = cur1.fetchall()
@@ -421,7 +419,7 @@ def showAllStock():
     x2 = tv2.get_children()
     for item2 in x2:
         tv2.delete(item2)
-    con2 = pymysql.connect(user='root', password='hanxu1125', database='b1', charset='utf8')
+    con2 = pymysql.connect(host, host_name, host_password, database)
     cur2 = con2.cursor()
     cur2.execute("select * from stock")
     lst2 = cur2.fetchall()
@@ -477,45 +475,86 @@ def showAllSale(odr, goods_type=-1, start_time='0000-00-00 00:00:00', end_time='
           f"by goods_id, goods_name {order} "
     cursor.execute(sql)
     res = cursor.fetchall()
-    count = 0
-    feedback = ''
-
-    sum_all_payment = 0
-    sum_all_profit = 0
-    # feedback = count sum_all_payment sum_all_profit goods_id1, goods_name1, sum_quantity1, sum_payment1, sum_profit1 .
     for row in res:
         print(
             "goods_id={}\tgoods_name={}\tsum_quantity={}\tsum_payment={}\tsum_profit={}".format(row[0], row[1], row[2],
                                                                                                 row[3], row[4]))
         li = [row[0], row[1], row[2], row[3], row[4]]
-        tv3.insert("", 1, text="line1", values=li)
-        feedback = feedback + "{} {} {} {} {} ".format(row[0], row[1], row[2], row[3], row[4])
-        count = count + 1
-        sum_all_payment = sum_all_payment + row[3]
-        sum_all_profit = sum_all_profit + row[4]
-    if count == 0:
-        db.close()
-        return 0
-    feedback = f"{count} {sum_all_payment} {sum_all_profit} " + feedback
+        tv3.insert("", 'end', text="line1", values=li)
+
     db.close()
 
 
-tk.Label(tab14, text='排序方式:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.05)
-odr = tk.StringVar()
-enter_odr = tk.Entry(tab14, textvariable=odr, font=('潮字社国风冉宋简-闪', 16))
-enter_odr.place(relx=0.44, rely=0.05)
-tk.Label(tab14, text='商品类型:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.15)
-goods_type = tk.StringVar()
-enter_goods_type = tk.Entry(tab14, textvariable=goods_type, font=('潮字社国风冉宋简-闪', 16))
-enter_goods_type.place(relx=0.44, rely=0.15)
-tk.Label(tab14, text='起始时间:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.25)
+tk.Label(tab14, text='排序方式:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.01)
+# odr = tk.StringVar()
+# enter_odr = tk.Entry(tab14, textvariable=odr, font=('潮字社国风冉宋简-闪', 16))
+# enter_odr.place(relx=0.44, rely=0.05)
+
+enter_odr = -1
+
+
+def up():
+    global enter_odr
+    enter_odr = 1
+
+
+def down():
+    global enter_odr
+    enter_odr = 0
+
+
+# 第5步，创建三个radiobutton选项，其中variable=var, value='A'的意思就是，当我们鼠标选中了其中一个选项，把value的值A放到变量var中，然后赋值给variable
+r1 = tk.Radiobutton(tab14, text='总利润降序', font=('潮字社国风冉宋简-闪', 10), variable=enter_odr, value=1, command=up)
+r1.pack()
+r2 = tk.Radiobutton(tab14, text='销售额降序', font=('潮字社国风冉宋简-闪', 10), variable=enter_odr, value=0, command=down)
+r2.pack()
+# r1.grid(relx=0.5,rela=0.05)
+# r2.grid(row=2, column=1)
+
+tk.Label(tab14, text='商品类型:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.1)
+
+cmb = ttk.Combobox(tab14, width=10, font=('潮字社国风冉宋简-闪', 12))
+# cmb.grid(row=3,column=1)
+cmb.pack()
+# 设置下拉菜单中的值
+cmb['value'] = ("全部商品", "生活类", "办公类", "书籍类", "电器类", "饮食类", "其他")
+t = -2
+
+
+# 执行函数
+def func(event):
+    global t
+    l = cmb.get()
+    if (l == "全部商品"):
+        t = -1
+    elif (l == "生活类"):
+        t = 1
+    elif (l == "办公类"):
+        t = 2
+    elif (l == "书籍类"):
+        t = 3
+    elif (l == "电器类"):
+        t = 4
+    elif (l == "饮食类"):
+        t = 5
+    else:
+        t = 0
+    # print(t)
+
+
+cmb.bind("<<ComboboxSelected>>", func)
+
+# goods_type = tk.StringVar()
+# enter_goods_type = tk.Entry(tab14, textvariable=goods_type, font=('潮字社国风冉宋简-闪', 16))
+# enter_goods_type.place(relx=0.44, rely=0.15)
+tk.Label(tab14, text='起始时间:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.2)
 start_time = tk.StringVar()
 enter_start_time = tk.Entry(tab14, textvariable=start_time, font=('潮字社国风冉宋简-闪', 16))
-enter_start_time.place(relx=0.44, rely=0.25)
-tk.Label(tab14, text='截止时间:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.35)
+enter_start_time.place(relx=0.42, rely=0.2)
+tk.Label(tab14, text='截止时间:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.3)
 end_time = tk.StringVar()
 enter_end_time = tk.Entry(tab14, textvariable=end_time, font=('潮字社国风冉宋简-闪', 16))
-enter_end_time.place(relx=0.44, rely=0.35)
+enter_end_time.place(relx=0.42, rely=0.3)
 tv3 = ttk.Treeview(tab14, show='headings',
                    column=('goods_id', 'goods_name', 'sum_quantity', 'sum_payment', 'sum_profit'))
 tv3.column('goods_id', width=150, anchor="center")
@@ -524,16 +563,35 @@ tv3.column('sum_quantity', width=150, anchor="center")
 tv3.column('sum_payment', width=150, anchor="center")
 tv3.column('sum_profit', width=150, anchor="center")
 
+# tv3.heading('goods_id', text='商品号')
+# tv3.heading('goods_name', text='商品名称')
+# tv3.heading('sum_quantity', text='总数')
+# tv3.heading('sum_payment', text='总售价')
+# tv3.heading('sum_profit', text='利润')
+# tv3.place(rely=0.48, relwidth=1, relheight=0.8)
+
+def treeview_sort_column(tv3, col, reverse):  # Treeview、列名、排列方式
+    l = [(tv3.set(k, col), k) for k in tv3.get_children('')]
+    print(tv3.get_children(''))
+    l.sort(reverse=reverse)  # 排序方式
+    # rearrange items in sorted positions
+    for index, (val, k) in enumerate(l):  # 根据排序后索引移动
+        tv3.move(k, '', index)
+        print(k)
+    tv3.heading(col, command=lambda: treeview_sort_column(tv3, col, not reverse))  # 重写标题，使之成为再点倒序的标题
+columns = ["goods_id","sum_quantity","sum_payment","sum_profit"]
+for col in columns:  # 给所有标题加（循环上边的“手工”）
+    tv3.heading(col, text=col, command=lambda _col=col: treeview_sort_column(tv3, _col, False))
 tv3.heading('goods_id', text='商品号')
 tv3.heading('goods_name', text='商品名称')
 tv3.heading('sum_quantity', text='总数')
-tv3.heading('sum_payment', text='总售价')
-tv3.heading('sum_profit', text='利润')
-tv3.place(rely=0.52, relwidth=1, relheight=0.8)
+tv3.heading('sum_payment', text='销售额')
+tv3.heading('sum_profit', text='总利润')
+tv3.place(rely=0.48, relwidth=1, relheight=0.8)
 get_sale_btn = tk.Button(tab14, text='查询销售情况', font=('潮字社国风冉宋简-闪', 16),
-                         command=lambda: showAllSale(enter_odr.get(), enter_goods_type.get(), enter_start_time.get(),
+                         command=lambda: showAllSale(enter_odr, t, enter_start_time.get(),
                                                      enter_end_time.get()))
-get_sale_btn.place(relx=0.45, rely=0.42)
+get_sale_btn.place(relx=0.45, rely=0.38)
 
 
 # 6，查询VIP交易
@@ -600,7 +658,7 @@ tv4.place(rely=0.35, relwidth=1, relheight=0.8)
 get_vip_purchase_btn = tk.Button(tab15, text='查询VIP交易情况', font=('潮字社国风冉宋简-闪', 16),
                                  command=lambda: show_vip_purchase(enter_vip_start_time.get(),
                                                                    enter_vip_end_time.get()))
-get_vip_purchase_btn.place(relx=0.45, rely=0.25)
+get_vip_purchase_btn.place(relx=0.45, rely=0.23)
 
 
 # 7，查询商品信息
@@ -644,7 +702,7 @@ tv5.heading('quantity', text='数量')
 tv5.place(rely=0.25, relwidth=1, relheight=0.8)
 get_single_goods_info_btn = tk.Button(tab16, text='商品信息', font=('潮字社国风冉宋简-闪', 16),
                                       command=lambda: show_single_goods_info(enter_goods_id3.get()))
-get_single_goods_info_btn.place(relx=0.45, rely=0.15)
+get_single_goods_info_btn.place(relx=0.45, rely=0.13)
 
 # 8，修改商品信息
 tk.Label(tab17, text='商品id:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.05)
@@ -719,7 +777,7 @@ tv6.place(rely=0.35, relwidth=1, relheight=0.8)
 get_profit_rank_btn = tk.Button(tab18, text='利润排名', font=('潮字社国风冉宋简-闪', 16),
                                 command=lambda: show_every_type_sum_profit(enter_start_time1.get(),
                                                                            enter_end_time1.get()))
-get_profit_rank_btn.place(relx=0.45, rely=0.25)
+get_profit_rank_btn.place(relx=0.45, rely=0.23)
 
 
 #   10.查询所有顾客的在一定时间内的总消费排名
@@ -766,7 +824,7 @@ tv7.place(rely=0.35, relwidth=1, relheight=0.8)
 get_buy_rank_btn = tk.Button(tab19, text='消费排名', font=('潮字社国风冉宋简-闪', 16),
                              command=lambda: show_every_customer_sum_payment(enter_start_time2.get(),
                                                                              enter_end_time2.get()))
-get_buy_rank_btn.place(relx=0.45, rely=0.25)
+get_buy_rank_btn.place(relx=0.45, rely=0.23)
 
 
 #   11.查询一个特定的顾客的vip点获得记录
@@ -807,7 +865,7 @@ tv8.heading('way_name', text='获得方式')
 tv8.place(rely=0.25, relwidth=1, relheight=0.8)
 vip_point_btn = tk.Button(tab20, text='查询vip点', font=('潮字社国风冉宋简-闪', 16),
                           command=lambda: show_single_customer_point(enter_vip_id.get()))
-vip_point_btn.place(relx=0.45, rely=0.15)
+vip_point_btn.place(relx=0.45, rely=0.13)
 
 
 #   12.查询某一未注销员工的个人信息
@@ -847,7 +905,7 @@ tv9.heading('type', text='类型')
 tv9.place(rely=0.25, relwidth=1, relheight=0.8)
 get_info_btn = tk.Button(tab21, text='个人信息', font=('潮字社国风冉宋简-闪', 16),
                          command=lambda: show_single_staff_info(enter_customer_id3.get()))
-get_info_btn.place(relx=0.45, rely=0.15)
+get_info_btn.place(relx=0.45, rely=0.13)
 
 print(type_user)
 if type_user == 1:
