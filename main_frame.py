@@ -1,19 +1,9 @@
 from tkinter import *
 import tkinter.ttk as ttk
 import tkinter as tk
-import login
-import cashier
-import pymysql
-import buyer
-import administrator
 import connectlib
 
-# ↓请修改数据库基本信息↓
 
-# host = "127.0.0.1"
-# host_name = "root"
-# host_password = "hanxu1125"
-# database = "b1"
 
 type_user = -1  # 用户类型
 uid = ''
@@ -37,7 +27,7 @@ class MY_GUI():
         self.window.title('欢迎来到商品进销与人员管理系统')
         self.window.geometry('400x200')
         # 用户信息
-        tk.Label(self.window, text='用户名:', font=('潮字社国风冉宋简-闪', 14)).place(x=10, y=50)
+        tk.Label(self.window, text='账号:', font=('潮字社国风冉宋简-闪', 14)).place(x=10, y=50)
         tk.Label(self.window, text='密码:', font=('潮字社国风冉宋简-闪', 14)).place(x=10, y=100)
         # 用户名
         self.var_usr_name = tk.StringVar()
@@ -162,7 +152,7 @@ tk.Label(tab3, text='请输入顾客id:', font=('潮字社国风冉宋简-闪', 
 customer_id = tk.StringVar()
 enter_customer_id = tk.Entry(tab3, textvariable=customer_id, font=('潮字社国风冉宋简-闪', 16))
 enter_customer_id.place(relx=0.46, rely=0.2)
-tk.Label(tab3, text='请输入商品号:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.35)
+tk.Label(tab3, text='请输入商品id:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.35)
 goods_id = tk.StringVar()
 enter_goods_id = tk.Entry(tab3, textvariable=goods_id, font=('潮字社国风冉宋简-闪', 16))
 enter_goods_id.place(relx=0.46, rely=0.35)
@@ -423,7 +413,7 @@ tab14.place(x=30, y=30)
 tab_main.add(tab14, text='销售情况')
 tab15 = Frame(tab_main)  # 管理员界面
 tab15.place(x=30, y=30)
-tab_main.add(tab15, text='VIP交易情况')
+tab_main.add(tab15, text='交易情况')
 tab16 = Frame(tab_main)  # 管理员界面
 tab16.place(x=30, y=30)
 tab_main.add(tab16, text='商品信息')
@@ -438,10 +428,10 @@ tab19.place(x=30, y=30)
 tab_main.add(tab19, text='消费排名')
 tab20 = Frame(tab_main)  # 管理员界面
 tab20.place(x=30, y=30)
-tab_main.add(tab20, text='vip记录')
+tab_main.add(tab20, text='积分获得记录')
 tab21 = Frame(tab_main)  # 管理员界面
 tab21.place(x=30, y=30)
-tab_main.add(tab21, text='个人信息')
+tab_main.add(tab21, text='员工信息')
 
 ##########
 # 管 理 员 界 面 #
@@ -509,9 +499,9 @@ tv1.column('customer_id', width=150, anchor="center")
 tv1.column('customer_name', width=150, anchor="center")
 tv1.column('point', width=150, anchor="center")
 
-tv1.heading('customer_id', text='客户id')
-tv1.heading('customer_name', text='客户姓名')
-tv1.heading('point', text='积分')
+tv1.heading('customer_id', text='顾客id')
+tv1.heading('customer_name', text='顾客姓名')
+tv1.heading('point', text='VIP等级')
 tv1.place(rely=0.15, relwidth=1, relheight=0.8)
 get_customer_btn = tk.Button(tab12, text='查看所有顾客信息', font=('潮字社国风冉宋简-闪', 16), command=getCusInfo)
 get_customer_btn.place(relx=0.4, rely=0.05, width=200)
@@ -626,9 +616,9 @@ for col in columns:  # 给所有标题加（循环上边的“手工”）
     tv3.heading(col, text=col, command=lambda _col=col: treeview_sort_column(tv3, _col, False))
 tv3.heading('sum_payment', text='销售额')
 tv3.heading('sum_profit', text='总利润')
-tv3.heading('goods_id', text='商品号')
+tv3.heading('goods_id', text='商品id')
 tv3.heading('goods_name', text='商品名称')
-tv3.heading('sum_quantity', text='总数')
+tv3.heading('sum_quantity', text='销售数量')
 tv3.place(rely=0.48, relwidth=1, relheight=0.8)
 
 
@@ -679,7 +669,7 @@ tv4.heading('goods_id', text='商品号')
 tv4.heading('quantity', text='数量')
 tv4.heading('time', text='交易时间')
 tv4.heading('payment', text='售价')
-tv4.heading('vip', text='VIP点')
+tv4.heading('vip', text='VIP等级')
 tv4.place(rely=0.35, relwidth=1, relheight=0.8)
 
 
@@ -698,7 +688,7 @@ def show_vip_purchase():
         tem = tem + 9
 
 
-get_vip_purchase_btn = tk.Button(tab15, text='查询VIP交易情况', font=('潮字社国风冉宋简-闪', 16),
+get_vip_purchase_btn = tk.Button(tab15, text='查询交易情况', font=('潮字社国风冉宋简-闪', 16),
                                  command=show_vip_purchase)
 get_vip_purchase_btn.place(relx=0.45, rely=0.23)
 
@@ -718,7 +708,7 @@ tv5.column('quantity', width=150, anchor="center")
 tv5.heading('goods_name', text='商品名称')
 tv5.heading('price', text='售价')
 tv5.heading('cost', text='成本')
-tv5.heading('quantity', text='数量')
+tv5.heading('quantity', text='剩余数量')
 tv5.place(rely=0.25, relwidth=1, relheight=0.8)
 
 
@@ -890,14 +880,14 @@ def show_single_customer_point():
         tem = tem + 4
 
 
-vip_point_btn = tk.Button(tab20, text='查询vip点', font=('潮字社国风冉宋简-闪', 16),
+vip_point_btn = tk.Button(tab20, text='查询获得记录', font=('潮字社国风冉宋简-闪', 16),
                           command=show_single_customer_point)
 vip_point_btn.place(relx=0.45, rely=0.13)
 
 #   12.查询某一未注销员工的个人信息
 
 
-tk.Label(tab21, text='用户id:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.05)
+tk.Label(tab21, text='员工id:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.05)
 customer_id3 = tk.StringVar()
 enter_customer_id3 = tk.Entry(tab21, textvariable=customer_id3, font=('潮字社国风冉宋简-闪', 16))
 enter_customer_id3.place(relx=0.44, rely=0.05)
@@ -907,7 +897,7 @@ tv9.column('phone', width=150, anchor="center")
 tv9.column('type', width=150, anchor="center")
 
 tv9.heading('name', text='姓名')
-tv9.heading('phone', text='手机')
+tv9.heading('phone', text='电话')
 tv9.heading('type', text='类型')
 tv9.place(rely=0.25, relwidth=1, relheight=0.8)
 
@@ -925,7 +915,7 @@ def show_single_staff_info():
         tem = tem + 3
 
 
-get_info_btn = tk.Button(tab21, text='个人信息', font=('潮字社国风冉宋简-闪', 16),
+get_info_btn = tk.Button(tab21, text='查询信息', font=('潮字社国风冉宋简-闪', 16),
                          command=show_single_staff_info)
 get_info_btn.place(relx=0.45, rely=0.13)
 
