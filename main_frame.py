@@ -145,9 +145,12 @@ enter_new_phone.place(relx=0.46, rely=0.4)
 
 
 def modifyCInfo():
-    connectlib.modify_cashier_info(uid, enter_new_name.get(),
+    pd = connectlib.modify_cashier_info(uid, enter_new_name.get(),
                                    enter_new_phone.get())
-    print(tk.messagebox.showinfo('修改信息', '个人信息修改成功!'))
+    if pd == 0 or pd == '0':
+        print(tk.messagebox.showerror('修改失败', '个人信息修改失败！'))
+    else:
+        print(tk.messagebox.showinfo('修改信息', '个人信息修改成功！'))
 
 
 change_info_btn = tk.Button(tab2, text='修改个人信息', font=('潮字社国风冉宋简-闪', 16),
@@ -170,9 +173,12 @@ enter_quantity.place(relx=0.46, rely=0.5)
 
 
 def pur():
-    connectlib.purchase(enter_customer_id.get(), enter_goods_id.get(),
-                        enter_quantity.get())
-    print(tk.messagebox.showinfo('交易',
+    pd = connectlib.purchase(enter_customer_id.get(), enter_goods_id.get(),
+                             enter_quantity.get())
+    if pd == 0 or pd == '0':
+        print(tk.messagebox.showerror('交易失败', '购买数量大于库存数量！'))
+    else:
+        print(tk.messagebox.showinfo('交易成功',
                                  f'交易成功！顾客\"{enter_customer_id.get()}\"购买 {enter_quantity.get()} 件 {enter_goods_id.get()} 商品！'))
 
 
@@ -192,8 +198,11 @@ enter_point.place(relx=0.46, rely=0.4)
 
 
 def gpoint():
-    connectlib.buy_point(enter_customer_id2.get(), enter_point.get())
-    print(tk.messagebox.showinfo('购买点数', f'顾客 {enter_customer_id2.get()} 成功购买 {enter_point.get()} 点数'))
+    pd = connectlib.buy_point(enter_customer_id2.get(), enter_point.get())
+    if pd == 0 or pd == '0':
+        print(tk.messagebox.showerror('购买点数失败', '点数购买失败！'))
+    else:
+        print(tk.messagebox.showinfo('购买点数', f'顾客 {enter_customer_id2.get()} 成功购买 {enter_point.get()} 点数'))
 
 
 get_point = tk.Button(tab4, text='购买点数', font=('潮字社国风冉宋简-闪', 16),
@@ -212,9 +221,12 @@ enter_customer_phone.place(relx=0.46, rely=0.4)
 
 
 def signCus():
-    connectlib.sign_up_new_customer(enter_customer_name.get(),
+    pd = connectlib.sign_up_new_customer(enter_customer_name.get(),
                                     enter_customer_phone.get())
-    print(tk.messagebox.showinfo('添加顾客', f'成功添加新顾客：{enter_customer_name.get()}'))
+    if pd == 0 or pd == '0':
+        print(tk.messagebox.showerror('添加失败', '顾客添加失败！'))
+    else:
+        print(tk.messagebox.showinfo('添加顾客', f'成功添加新顾客：{enter_customer_name.get()}'))
 
 
 register_customer = tk.Button(tab5, text='添加顾客', font=('潮字社国风冉宋简-闪', 16),
@@ -286,11 +298,13 @@ enter_buyer_new_phone.place(relx=0.46, rely=0.4)
 
 
 def modifyBuyerInfo():
-    connectlib.modify_buyer_info(uid,
+    pd = connectlib.modify_buyer_info(uid,
                                  enter_buyer_new_name.get(),
                                  enter_buyer_new_phone.get())
-    print(tk.messagebox.showinfo('修改成功', '个人信息修改成功！'))
-
+    if pd == 0 or pd == '0':
+        print(tk.messagebox.showerror('修改失败', '个人信息修改失败！'))
+    else:
+        print(tk.messagebox.showinfo('修改成功', '个人信息修改成功！'))
 
 change_buyer_info_btn = tk.Button(tab7, text='修改个人信息', font=('潮字社国风冉宋简-闪', 16),
                                   command=modifyBuyerInfo)
@@ -316,11 +330,14 @@ enter_goods_type0.place(relx=0.46, rely=0.65)
 
 
 def createGoods():
-    connectlib.create_new_goods(enter_goods_name0.get(),
+    pd = connectlib.create_new_goods(enter_goods_name0.get(),
                                 enter_goods_price0.get(),
                                 enter_goods_cost0.get(),
                                 enter_goods_type0.get())
-    print(tk.messagebox.showinfo('添加成功', f'商品\"{enter_goods_name0.get()}\"添加成功！商品类型为：{enter_goods_type0.get()}'))
+    if pd == 0 or pd == '0':
+        print(tk.messagebox.showerror('添加失败', '商品添加失败！'))
+    else:
+        print(tk.messagebox.showinfo('添加成功', f'商品\"{enter_goods_name0.get()}\"添加成功！商品类型为：{enter_goods_type0.get()}'))
 
 
 add_goods_btn0 = tk.Button(tab8, text='添加商品', font=('潮字社国风冉宋简-闪', 16),
@@ -343,9 +360,12 @@ enter_add_goods_quantity.place(relx=0.46, rely=0.4)
 
 
 def getStock():
-    connectlib.stock(enter_goods_id2.get(), uid,
+    pd = connectlib.stock(enter_goods_id2.get(), uid,
                      enter_add_goods_quantity.get())
-    print(tk.messagebox.showinfo('进货成功', f'商品 {enter_goods_id2.get()} 进货成功！数量：{enter_add_goods_quantity.get()}'))
+    if pd == 0 or pd == '0':
+        print(tk.messagebox.showerror('进货失败', f'商品 {enter_goods_id2.get()} 进货失败！'))
+    else:
+        print(tk.messagebox.showinfo('进货成功', f'商品 {enter_goods_id2.get()} 进货成功！数量：{enter_add_goods_quantity.get()}'))
 
 
 add_goods_quantity_btn = tk.Button(tab9, text='添加商品', font=('潮字社国风冉宋简-闪', 16),
@@ -445,7 +465,10 @@ enter_new_user_type.place(relx=0.46, rely=0.4)
 
 def reg():
     newid = connectlib.register(enter_user_pwd.get(), enter_new_user_type.get())
-    print(tk.messagebox.showinfo('注册成功', f'新用户id为： {newid}'))
+    if newid == 0 or newid == '0':
+        print(tk.messagebox.showerror('注册失败', '新用户注册失败！'))
+    else:
+        print(tk.messagebox.showinfo('注册成功', f'新用户id为： {newid}'))
 
 
 new_user_btn = tk.Button(tab10, text='新建用户', font=('潮字社国风冉宋简-闪', 16),
@@ -460,8 +483,11 @@ enter_logout_id.place(relx=0.44, rely=0.35)
 
 
 def out():
-    connectlib.logout(enter_logout_id.get())
-    print(tk.messagebox.showinfo('注销', f'注销成功！用户：{enter_logout_id.get()} 已被注销！'))
+    pd = connectlib.logout(enter_logout_id.get())
+    if pd == 0 or pd == '0':
+        print(tk.messagebox.showerror('注销失败', f'用户 {enter_logout_id.get()} 注销失败！'))
+    else:
+        print(tk.messagebox.showinfo('注销', f'注销成功！用户：{enter_logout_id.get()} 已被注销！'))
 
 
 logout_user_btn = tk.Button(tab11, text='注销用户', font=('潮字社国风冉宋简-闪', 16),
@@ -739,12 +765,19 @@ tk.Label(tab17, text='商品新数量:', font=('潮字社国风冉宋简-闪', 1
 new_quantity = tk.StringVar()
 enter_new_quantity = tk.Entry(tab17, textvariable=new_quantity, font=('潮字社国风冉宋简-闪', 16))
 enter_new_quantity.place(relx=0.46, rely=0.45)
+def modiInfo():
+    pd = connectlib.modify_single_goods_info(enter_goods_id4.get(),
+                                        enter_new_goods_name.get(),
+                                        enter_new_price.get(),
+                                        enter_new_cost.get(),
+                                        enter_new_quantity.get())
+    if pd == 0 or pd == '0':
+        print(tk.messagebox.showerror('注销失败', f'用户 {enter_logout_id.get()} 注销失败！'))
+    else:
+        print(tk.messagebox.showerror('注销失败', f'用户 {enter_logout_id.get()} 注销失败！'))
+
 modify_single_goods_info_btn = tk.Button(tab17, text='修改商品信息', font=('潮字社国风冉宋简-闪', 16),
-                                         command=lambda: connectlib.modify_single_goods_info(enter_goods_id4.get(),
-                                                                                             enter_new_goods_name.get(),
-                                                                                             enter_new_price.get(),
-                                                                                             enter_new_cost.get(),
-                                                                                             enter_new_quantity.get()))
+                                         command=modiInfo)
 modify_single_goods_info_btn.place(relx=0.45, rely=0.55)
 
 #   9.查询各种商品类型的在一定时间内的总利润排名
