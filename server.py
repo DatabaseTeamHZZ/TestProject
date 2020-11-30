@@ -108,10 +108,10 @@ while True:
                     feedback = administrator.get_customer()
                 if msg[1] == '4':
                     feedback = administrator.get_stock()
-                if msg[1] == '5':           # 查询一段时间内的销售情况msg[2]=0,销售额降序,msg[2]=1,利润降序,3,4起止时间
+                if msg[1] == '5':  # 查询一段时间内的销售情况msg[2]=0,销售额降序,msg[2]=1,利润降序,3,4起止时间
                     feedback = administrator.get_sale(
                         msg[2], msg[3], msg[4], msg[5])
-                if msg[1] == '6':           # 查询一段时间内的VIP购物记录,msg[3],msg[4]起止时间。按用户VIP等级,id降序
+                if msg[1] == '6':  # 查询一段时间内的VIP购物记录,msg[3],msg[4]起止时间。按用户VIP等级,id降序
                     feedback = administrator.get_vip_purchase(msg[2], msg[3])
                 if msg[1] == '7':
                     feedback = administrator.get_single_goods_info(msg[2])
@@ -146,7 +146,7 @@ while True:
             data_tx = bytes('%s' % temp, encoding='utf8')  # 编码为二进制文件
             connect.send(data_tx)  #
 
-            temp = ''                               # 重构 feedback 与 q
+            temp = ''  # 重构 feedback 与 q
             q = ''
             for j in range(566, len(feedback)):
                 q += feedback[j]

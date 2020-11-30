@@ -10,10 +10,10 @@ import connectlib
 
 # ↓请修改数据库基本信息↓
 
-host = "127.0.0.1"
-host_name = "root"
-host_password = "hanxu1125"
-database = "b1"
+# host = "127.0.0.1"
+# host_name = "root"
+# host_password = "hanxu1125"
+# database = "b1"
 
 type_user = -1  # 用户类型
 uid = ''
@@ -192,17 +192,14 @@ customer_id2 = tk.StringVar()
 enter_customer_id2 = tk.Entry(tab4, textvariable=customer_id2, font=('潮字社国风冉宋简-闪', 16))
 enter_customer_id2.place(relx=0.46, rely=0.2)
 tk.Label(tab4, text='请输入购买点数:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.4)
-point = tk.StringVar()
-enter_point = tk.Entry(tab4, textvariable=point, font=('潮字社国风冉宋简-闪', 16))
+point0 = tk.StringVar()
+enter_point = tk.Entry(tab4, textvariable=point0, font=('潮字社国风冉宋简-闪', 16))
 enter_point.place(relx=0.46, rely=0.4)
 
 
 def gpoint():
-    pd = connectlib.buy_point(enter_customer_id2.get(), enter_point.get())
-    if pd == 0 or pd == '0':
-        print(tk.messagebox.showerror('购买点数失败', '点数购买失败！'))
-    else:
-        print(tk.messagebox.showinfo('购买点数', f'顾客 {enter_customer_id2.get()} 成功购买 {enter_point.get()} 点数'))
+    connectlib.buy_point(enter_customer_id2.get(), enter_point.get())
+    print(tk.messagebox.showinfo('购买点数', f'顾客 {enter_customer_id2.get()} 成功购买 {enter_point.get()} 点数'))
 
 
 get_point = tk.Button(tab4, text='购买点数', font=('潮字社国风冉宋简-闪', 16),
@@ -298,13 +295,10 @@ enter_buyer_new_phone.place(relx=0.46, rely=0.4)
 
 
 def modifyBuyerInfo():
-    pd = connectlib.modify_buyer_info(uid,
+    connectlib.modify_buyer_info(uid,
                                       enter_buyer_new_name.get(),
                                       enter_buyer_new_phone.get())
-    if pd == 0 or pd == '0':
-        print(tk.messagebox.showerror('修改失败', '个人信息修改失败！'))
-    else:
-        print(tk.messagebox.showinfo('修改成功', '个人信息修改成功！'))
+    print(tk.messagebox.showinfo('修改成功', '个人信息修改成功！'))
 
 
 change_buyer_info_btn = tk.Button(tab7, text='修改个人信息', font=('潮字社国风冉宋简-闪', 16),
@@ -775,9 +769,9 @@ def modiInfo():
                                              enter_new_cost.get(),
                                              enter_new_quantity.get())
     if pd == 0 or pd == '0':
-        print(tk.messagebox.showerror('注销失败', f'用户 {enter_logout_id.get()} 注销失败！'))
+        print(tk.messagebox.showerror('修改失败', '商品信息修改失败！'))
     else:
-        print(tk.messagebox.showerror('注销失败', f'用户 {enter_logout_id.get()} 注销失败！'))
+        print(tk.messagebox.showinfo('修改成功', '商品信息修改成功！'))
 
 
 modify_single_goods_info_btn = tk.Button(tab17, text='修改商品信息', font=('潮字社国风冉宋简-闪', 16),
