@@ -146,7 +146,7 @@ enter_new_phone.place(relx=0.46, rely=0.4)
 
 def modifyCInfo():
     pd = connectlib.modify_cashier_info(uid, enter_new_name.get(),
-                                   enter_new_phone.get())
+                                        enter_new_phone.get())
     if pd == 0 or pd == '0':
         print(tk.messagebox.showerror('修改失败', '个人信息修改失败！'))
     else:
@@ -179,7 +179,7 @@ def pur():
         print(tk.messagebox.showerror('交易失败', '购买数量大于库存数量！'))
     else:
         print(tk.messagebox.showinfo('交易成功',
-                                 f'交易成功！顾客\"{enter_customer_id.get()}\"购买 {enter_quantity.get()} 件 {enter_goods_id.get()} 商品！'))
+                                     f'交易成功！顾客\"{enter_customer_id.get()}\"购买 {enter_quantity.get()} 件 {enter_goods_id.get()} 商品！'))
 
 
 purchase_btn = tk.Button(tab3, text='交易', font=('潮字社国风冉宋简-闪', 16),
@@ -222,7 +222,7 @@ enter_customer_phone.place(relx=0.46, rely=0.4)
 
 def signCus():
     pd = connectlib.sign_up_new_customer(enter_customer_name.get(),
-                                    enter_customer_phone.get())
+                                         enter_customer_phone.get())
     if pd == 0 or pd == '0':
         print(tk.messagebox.showerror('添加失败', '顾客添加失败！'))
     else:
@@ -299,12 +299,13 @@ enter_buyer_new_phone.place(relx=0.46, rely=0.4)
 
 def modifyBuyerInfo():
     pd = connectlib.modify_buyer_info(uid,
-                                 enter_buyer_new_name.get(),
-                                 enter_buyer_new_phone.get())
+                                      enter_buyer_new_name.get(),
+                                      enter_buyer_new_phone.get())
     if pd == 0 or pd == '0':
         print(tk.messagebox.showerror('修改失败', '个人信息修改失败！'))
     else:
         print(tk.messagebox.showinfo('修改成功', '个人信息修改成功！'))
+
 
 change_buyer_info_btn = tk.Button(tab7, text='修改个人信息', font=('潮字社国风冉宋简-闪', 16),
                                   command=modifyBuyerInfo)
@@ -331,9 +332,9 @@ enter_goods_type0.place(relx=0.46, rely=0.65)
 
 def createGoods():
     pd = connectlib.create_new_goods(enter_goods_name0.get(),
-                                enter_goods_price0.get(),
-                                enter_goods_cost0.get(),
-                                enter_goods_type0.get())
+                                     enter_goods_price0.get(),
+                                     enter_goods_cost0.get(),
+                                     enter_goods_type0.get())
     if pd == 0 or pd == '0':
         print(tk.messagebox.showerror('添加失败', '商品添加失败！'))
     else:
@@ -361,7 +362,7 @@ enter_add_goods_quantity.place(relx=0.46, rely=0.4)
 
 def getStock():
     pd = connectlib.stock(enter_goods_id2.get(), uid,
-                     enter_add_goods_quantity.get())
+                          enter_add_goods_quantity.get())
     if pd == 0 or pd == '0':
         print(tk.messagebox.showerror('进货失败', f'商品 {enter_goods_id2.get()} 进货失败！'))
     else:
@@ -765,16 +766,19 @@ tk.Label(tab17, text='商品新数量:', font=('潮字社国风冉宋简-闪', 1
 new_quantity = tk.StringVar()
 enter_new_quantity = tk.Entry(tab17, textvariable=new_quantity, font=('潮字社国风冉宋简-闪', 16))
 enter_new_quantity.place(relx=0.46, rely=0.45)
+
+
 def modiInfo():
     pd = connectlib.modify_single_goods_info(enter_goods_id4.get(),
-                                        enter_new_goods_name.get(),
-                                        enter_new_price.get(),
-                                        enter_new_cost.get(),
-                                        enter_new_quantity.get())
+                                             enter_new_goods_name.get(),
+                                             enter_new_price.get(),
+                                             enter_new_cost.get(),
+                                             enter_new_quantity.get())
     if pd == 0 or pd == '0':
         print(tk.messagebox.showerror('注销失败', f'用户 {enter_logout_id.get()} 注销失败！'))
     else:
         print(tk.messagebox.showerror('注销失败', f'用户 {enter_logout_id.get()} 注销失败！'))
+
 
 modify_single_goods_info_btn = tk.Button(tab17, text='修改商品信息', font=('潮字社国风冉宋简-闪', 16),
                                          command=modiInfo)
