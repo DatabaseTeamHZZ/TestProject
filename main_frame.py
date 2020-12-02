@@ -4,13 +4,11 @@ import tkinter.messagebox
 import tkinter as tk
 import connectlib
 
-
-
 type_user = -1  # 用户类型
 uid = ''
 
 
-# 登陆界面
+# 登陆 界面
 class MY_GUI():
     def __init__(self):  # 类似于构造器，将TK窗口作为成员对象初始化进来
         pass
@@ -964,7 +962,6 @@ def show_single_staff_info():
                 tv9.insert('', 'end',
                            value=[myStr[tem], myStr[tem + 1], myStr[tem + 2]])
             tem = tem + 3
-
 
 get_info_btn = tk.Button(tab21, text='查询信息', font=('潮字社国风冉宋简-闪', 16),
                          command=show_single_staff_info)
