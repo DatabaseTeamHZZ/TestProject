@@ -1,20 +1,10 @@
 from tkinter import *
 import tkinter.ttk as ttk
-import tkinter as tk
 import tkinter.messagebox
-import login
-import cashier
-import pymysql
-import buyer
-import administrator
+import tkinter as tk
 import connectlib
 
-# ↓请修改数据库基本信息↓
 
-# host = "127.0.0.1"
-# host_name = "root"
-# host_password = ""
-# database = "b1"
 
 type_user = -1  # 用户类型
 uid = ''
@@ -38,7 +28,7 @@ class MY_GUI():
         self.window.title('欢迎来到商品进销与人员管理系统')
         self.window.geometry('400x200')
         # 用户信息
-        tk.Label(self.window, text='用户名:', font=('潮字社国风冉宋简-闪', 14)).place(x=10, y=50)
+        tk.Label(self.window, text='账号:', font=('潮字社国风冉宋简-闪', 14)).place(x=10, y=50)
         tk.Label(self.window, text='密码:', font=('潮字社国风冉宋简-闪', 14)).place(x=10, y=100)
         # 用户名
         self.var_usr_name = tk.StringVar()
@@ -163,7 +153,7 @@ tk.Label(tab3, text='请输入顾客id:', font=('潮字社国风冉宋简-闪', 
 customer_id = tk.StringVar()
 enter_customer_id = tk.Entry(tab3, textvariable=customer_id, font=('潮字社国风冉宋简-闪', 16))
 enter_customer_id.place(relx=0.46, rely=0.2)
-tk.Label(tab3, text='请输入商品号:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.35)
+tk.Label(tab3, text='请输入商品id:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.35)
 goods_id = tk.StringVar()
 enter_goods_id = tk.Entry(tab3, textvariable=goods_id, font=('潮字社国风冉宋简-闪', 16))
 enter_goods_id.place(relx=0.46, rely=0.35)
@@ -396,12 +386,17 @@ def showGoodsStock():
     x = tv.get_children()
     for item in x:
         tv.delete(item)
-    myStr = connectlib.get_single_goods_info(enter_goods_id22.get()).split()
-    tem = 0
-    while tem + 3 < len(myStr):
-        if (tem % 4 == 0):
-            tv.insert('', 'end', value=[myStr[tem], myStr[tem + 1], myStr[tem + 2], myStr[tem + 3]])
-        tem = tem + 4
+    full_str = connectlib.get_single_goods_info(enter_goods_id22.get())
+    if full_str == 0 or full_str == '0':
+        print(tk.messagebox.showerror('查询错误','信息不存在！'))
+        return 0
+    else:
+        myStr = full_str.split()
+        tem = 0
+        while tem + 3 < len(myStr):
+            if (tem % 4 == 0):
+                tv.insert('', 'end', value=[myStr[tem], myStr[tem + 1], myStr[tem + 2], myStr[tem + 3]])
+            tem = tem + 4
 
 
 btn = tk.Button(tab22, text="显示库存", font=('潮字社国风冉宋简-闪', 16), command=showGoodsStock)
@@ -424,7 +419,7 @@ tab14.place(x=30, y=30)
 tab_main.add(tab14, text='销售情况')
 tab15 = Frame(tab_main)  # 管理员界面
 tab15.place(x=30, y=30)
-tab_main.add(tab15, text='VIP交易情况')
+tab_main.add(tab15, text='交易情况')
 tab16 = Frame(tab_main)  # 管理员界面
 tab16.place(x=30, y=30)
 tab_main.add(tab16, text='商品信息')
@@ -439,10 +434,10 @@ tab19.place(x=30, y=30)
 tab_main.add(tab19, text='消费排名')
 tab20 = Frame(tab_main)  # 管理员界面
 tab20.place(x=30, y=30)
-tab_main.add(tab20, text='vip记录')
+tab_main.add(tab20, text='积分获得记录')
 tab21 = Frame(tab_main)  # 管理员界面
 tab21.place(x=30, y=30)
-tab_main.add(tab21, text='个人信息')
+tab_main.add(tab21, text='员工信息')
 
 ##########
 # 管 理 员 界 面 #
@@ -497,12 +492,17 @@ def getCusInfo():
     x = tv1.get_children()
     for item5 in x:
         tv1.delete(item5)
-    myStr = connectlib.get_customers_info().split()
-    tem = 1
-    while tem + 2 < len(myStr):
-        if (tem % 3 == 1):
-            tv1.insert('', 'end', value=[myStr[tem], myStr[tem + 1], myStr[tem + 2]])
-        tem = tem + 3
+    full_str = connectlib.get_customers_info()
+    if full_str == 0 or full_str == '0':
+        print(tk.messagebox.showerror('查询错误','信息不存在！'))
+        return 0
+    else:
+        myStr = full_str.split()
+        tem = 1
+        while tem + 2 < len(myStr):
+            if (tem % 3 == 1):
+                tv1.insert('', 'end', value=[myStr[tem], myStr[tem + 1], myStr[tem + 2]])
+            tem = tem + 3
 
 
 tv1 = ttk.Treeview(tab12, show='headings', column=('customer_id', 'customer_name', 'point'))
@@ -510,9 +510,9 @@ tv1.column('customer_id', width=150, anchor="center")
 tv1.column('customer_name', width=150, anchor="center")
 tv1.column('point', width=150, anchor="center")
 
-tv1.heading('customer_id', text='客户id')
-tv1.heading('customer_name', text='客户姓名')
-tv1.heading('point', text='积分')
+tv1.heading('customer_id', text='顾客id')
+tv1.heading('customer_name', text='顾客姓名')
+tv1.heading('point', text='VIP等级')
 tv1.place(rely=0.15, relwidth=1, relheight=0.8)
 get_customer_btn = tk.Button(tab12, text='查看所有顾客信息', font=('潮字社国风冉宋简-闪', 16), command=getCusInfo)
 get_customer_btn.place(relx=0.4, rely=0.05, width=200)
@@ -523,13 +523,18 @@ def showAllStock():
     x = tv2.get_children()
     for item5 in x:
         tv2.delete(item5)
-    myStr = connectlib.get_stock().split()
-    tem = 1
-    while tem + 4 < len(myStr):
-        if (tem % 5 == 1):
-            tv2.insert('', 'end',
-                       value=[myStr[tem], myStr[tem + 1], myStr[tem + 2], myStr[tem + 3] + ' ' + myStr[tem + 4]])
-        tem = tem + 5
+    full_str = connectlib.get_stock()
+    if full_str == 0 or full_str == '0':
+        print(tk.messagebox.showerror('查询错误', '信息不存在！'))
+        return 0
+    else:
+        myStr = full_str.split()
+        tem = 1
+        while tem + 4 < len(myStr):
+            if (tem % 5 == 1):
+                tv2.insert('', 'end',
+                           value=[myStr[tem], myStr[tem + 1], myStr[tem + 2], myStr[tem + 3] + ' ' + myStr[tem + 4]])
+            tem = tem + 5
 
 
 tv2 = ttk.Treeview(tab13, show='headings', column=('goods_name', 'goods_id', 'quantity', 'time'))
@@ -627,9 +632,9 @@ for col in columns:  # 给所有标题加（循环上边的“手工”）
     tv3.heading(col, text=col, command=lambda _col=col: treeview_sort_column(tv3, _col, False))
 tv3.heading('sum_payment', text='销售额')
 tv3.heading('sum_profit', text='总利润')
-tv3.heading('goods_id', text='商品号')
+tv3.heading('goods_id', text='商品id')
 tv3.heading('goods_name', text='商品名称')
-tv3.heading('sum_quantity', text='总数')
+tv3.heading('sum_quantity', text='销售数量')
 tv3.place(rely=0.48, relwidth=1, relheight=0.8)
 
 
@@ -637,14 +642,19 @@ def showAllSale():
     x = tv3.get_children()
     for item5 in x:
         tv3.delete(item5)
-    myStr = connectlib.get_sale_in_period(enter_odr, t, enter_start_time.get(),
-                                          enter_end_time.get()).split()
-    tem = 1
-    while tem + 4 < len(myStr):
-        if (tem % 5 == 1):
-            tv3.insert('', 'end',
-                       value=[myStr[tem], myStr[tem + 1], myStr[tem + 2], myStr[tem + 3], myStr[tem + 4]])
-        tem = tem + 5
+    full_str = connectlib.get_sale_in_period(enter_odr, t, enter_start_time.get(),
+                                          enter_end_time.get())
+    if full_str == 0 or full_str == '0':
+        print(tk.messagebox.showerror('查询错误', '信息不存在！'))
+        return 0
+    else:
+        myStr = full_str.split()
+        tem = 1
+        while tem + 4 < len(myStr):
+            if (tem % 5 == 1):
+                tv3.insert('', 'end',
+                           value=[myStr[tem], myStr[tem + 1], myStr[tem + 2], myStr[tem + 3], myStr[tem + 4]])
+            tem = tem + 5
 
 
 get_sale_btn = tk.Button(tab14, text='查询销售情况', font=('潮字社国风冉宋简-闪', 16),
@@ -680,7 +690,7 @@ tv4.heading('goods_id', text='商品号')
 tv4.heading('quantity', text='数量')
 tv4.heading('time', text='交易时间')
 tv4.heading('payment', text='售价')
-tv4.heading('vip', text='VIP点')
+tv4.heading('vip', text='VIP等级')
 tv4.place(rely=0.35, relwidth=1, relheight=0.8)
 
 
@@ -688,18 +698,23 @@ def show_vip_purchase():
     x = tv4.get_children()
     for item5 in x:
         tv4.delete(item5)
-    myStr = connectlib.get_vip_sale_in_period(enter_vip_start_time.get(),
-                                              enter_vip_end_time.get()).split()
-    tem = 1
-    while tem + 8 < len(myStr):
-        if (tem % 9 == 1):
-            tv4.insert('', 'end',
-                       value=[myStr[tem], myStr[tem + 1], myStr[tem + 2], myStr[tem + 3], myStr[tem + 4],
-                              myStr[tem + 5] + ' ' + myStr[tem + 6], myStr[tem + 7], myStr[tem + 8]])
-        tem = tem + 9
+    full_str = connectlib.get_vip_sale_in_period(enter_vip_start_time.get(),
+                                              enter_vip_end_time.get())
+    if full_str == 0 or full_str == '0':
+        print(tk.messagebox.showerror('查询错误', '信息不存在！'))
+        return 0
+    else:
+        myStr = full_str.split()
+        tem = 1
+        while tem + 8 < len(myStr):
+            if (tem % 9 == 1):
+                tv4.insert('', 'end',
+                           value=[myStr[tem], myStr[tem + 1], myStr[tem + 2], myStr[tem + 3], myStr[tem + 4],
+                                  myStr[tem + 5] + ' ' + myStr[tem + 6], myStr[tem + 7], myStr[tem + 8]])
+            tem = tem + 9
 
 
-get_vip_purchase_btn = tk.Button(tab15, text='查询VIP交易情况', font=('潮字社国风冉宋简-闪', 16),
+get_vip_purchase_btn = tk.Button(tab15, text='查询交易情况', font=('潮字社国风冉宋简-闪', 16),
                                  command=show_vip_purchase)
 get_vip_purchase_btn.place(relx=0.45, rely=0.23)
 
@@ -719,7 +734,7 @@ tv5.column('quantity', width=150, anchor="center")
 tv5.heading('goods_name', text='商品名称')
 tv5.heading('price', text='售价')
 tv5.heading('cost', text='成本')
-tv5.heading('quantity', text='数量')
+tv5.heading('quantity', text='剩余数量')
 tv5.place(rely=0.25, relwidth=1, relheight=0.8)
 
 
@@ -727,13 +742,18 @@ def show_single_goods_info():
     x = tv5.get_children()
     for item in x:
         tv5.delete(item)
-    myStr = connectlib.get_single_goods_info(enter_goods_id3.get()).split()
-    tem = 0
-    while tem + 3 < len(myStr):
-        if (tem % 4 == 0):
-            tv5.insert('', 'end',
-                       value=[myStr[tem], myStr[tem + 1], myStr[tem + 2], myStr[tem + 3]])
-        tem = tem + 4
+    full_str = connectlib.get_single_goods_info(enter_goods_id3.get())
+    if full_str == 0 or full_str == '0':
+        print(tk.messagebox.showerror('查询错误', '信息不存在！'))
+        return 0
+    else:
+        myStr = full_str.split()
+        tem = 0
+        while tem + 3 < len(myStr):
+            if (tem % 4 == 0):
+                tv5.insert('', 'end',
+                           value=[myStr[tem], myStr[tem + 1], myStr[tem + 2], myStr[tem + 3]])
+            tem = tem + 4
 
 
 get_single_goods_info_btn = tk.Button(tab16, text='商品信息', font=('潮字社国风冉宋简-闪', 16),
@@ -805,14 +825,19 @@ def show_every_type_sum_profit():
     x = tv6.get_children()
     for item in x:
         tv6.delete(item)
-    myStr = connectlib.get_type_profit(enter_start_time1.get(),
-                                       enter_end_time1.get()).split()
-    tem = 1
-    while tem + 2 < len(myStr):
-        if (tem % 3 == 1):
-            tv6.insert('', 'end',
-                       value=[myStr[tem], myStr[tem + 1], myStr[tem + 2]])
-        tem = tem + 3
+    full_str = connectlib.get_type_profit(enter_start_time1.get(),
+                                       enter_end_time1.get())
+    if full_str == 0 or full_str == '0':
+        print(tk.messagebox.showerror('查询错误', '信息不存在！'))
+        return 0
+    else:
+        myStr = full_str.split()
+        tem = 1
+        while tem + 2 < len(myStr):
+            if (tem % 3 == 1):
+                tv6.insert('', 'end',
+                           value=[myStr[tem], myStr[tem + 1], myStr[tem + 2]])
+            tem = tem + 3
 
 
 get_profit_rank_btn = tk.Button(tab18, text='利润排名', font=('潮字社国风冉宋简-闪', 16),
@@ -845,14 +870,19 @@ def show_every_customer_sum_payment():
     x = tv7.get_children()
     for item in x:
         tv7.delete(item)
-    myStr = connectlib.get_customer_consume_rank(enter_start_time2.get(),
-                                                 enter_end_time2.get()).split()
-    tem = 1
-    while tem + 2 < len(myStr):
-        if (tem % 3 == 1):
-            tv7.insert('', 'end',
-                       value=[myStr[tem], myStr[tem + 1], myStr[tem + 2]])
-        tem = tem + 3
+    full_str = connectlib.get_customer_consume_rank(enter_start_time2.get(),
+                                                 enter_end_time2.get())
+    if full_str == 0 or full_str == '0':
+        print(tk.messagebox.showerror('查询错误', '信息不存在！'))
+        return 0
+    else:
+        myStr = full_str.split()
+        tem = 1
+        while tem + 2 < len(myStr):
+            if (tem % 3 == 1):
+                tv7.insert('', 'end',
+                           value=[myStr[tem], myStr[tem + 1], myStr[tem + 2]])
+            tem = tem + 3
 
 
 get_buy_rank_btn = tk.Button(tab19, text='消费排名', font=('潮字社国风冉宋简-闪', 16),
@@ -882,23 +912,28 @@ def show_single_customer_point():
     x = tv8.get_children()
     for item in x:
         tv8.delete(item)
-    myStr = connectlib.get_single_customer_point(enter_vip_id.get()).split()
-    tem = 1
-    while tem + 3 < len(myStr):
-        if (tem % 4 == 1):
-            tv8.insert('', 'end',
-                       value=[myStr[tem] + ' ' + myStr[tem + 1], myStr[tem + 2], myStr[tem + 3]])
-        tem = tem + 4
+    full_str = connectlib.get_single_customer_point(enter_vip_id.get())
+    if full_str == 0 or full_str == '0':
+        print(tk.messagebox.showerror('查询错误', '信息不存在！'))
+        return 0
+    else:
+        myStr = full_str.split()
+        tem = 1
+        while tem + 3 < len(myStr):
+            if (tem % 4 == 1):
+                tv8.insert('', 'end',
+                           value=[myStr[tem] + ' ' + myStr[tem + 1], myStr[tem + 2], myStr[tem + 3]])
+            tem = tem + 4
 
 
-vip_point_btn = tk.Button(tab20, text='查询vip点', font=('潮字社国风冉宋简-闪', 16),
+vip_point_btn = tk.Button(tab20, text='查询获得记录', font=('潮字社国风冉宋简-闪', 16),
                           command=show_single_customer_point)
 vip_point_btn.place(relx=0.45, rely=0.13)
 
 #   12.查询某一未注销员工的个人信息
 
 
-tk.Label(tab21, text='用户id:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.05)
+tk.Label(tab21, text='员工id:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.05)
 customer_id3 = tk.StringVar()
 enter_customer_id3 = tk.Entry(tab21, textvariable=customer_id3, font=('潮字社国风冉宋简-闪', 16))
 enter_customer_id3.place(relx=0.44, rely=0.05)
@@ -908,7 +943,7 @@ tv9.column('phone', width=150, anchor="center")
 tv9.column('type', width=150, anchor="center")
 
 tv9.heading('name', text='姓名')
-tv9.heading('phone', text='手机')
+tv9.heading('phone', text='电话')
 tv9.heading('type', text='类型')
 tv9.place(rely=0.25, relwidth=1, relheight=0.8)
 
@@ -917,16 +952,21 @@ def show_single_staff_info():
     x = tv9.get_children()
     for item in x:
         tv9.delete(item)
-    myStr = connectlib.get_single_staff_info(enter_customer_id3.get()).split()
-    tem = 1
-    while tem + 2 < len(myStr):
-        if (tem % 3 == 1):
-            tv9.insert('', 'end',
-                       value=[myStr[tem], myStr[tem + 1], myStr[tem + 2]])
-        tem = tem + 3
+    full_str = connectlib.get_single_staff_info(enter_customer_id3.get())
+    if full_str == 0 or full_str == '0':
+        print(tk.messagebox.showerror('查询错误', '信息不存在！'))
+        return 0
+    else:
+        myStr = full_str.split()
+        tem = 1
+        while tem + 2 < len(myStr):
+            if (tem % 3 == 1):
+                tv9.insert('', 'end',
+                           value=[myStr[tem], myStr[tem + 1], myStr[tem + 2]])
+            tem = tem + 3
 
 
-get_info_btn = tk.Button(tab21, text='个人信息', font=('潮字社国风冉宋简-闪', 16),
+get_info_btn = tk.Button(tab21, text='查询信息', font=('潮字社国风冉宋简-闪', 16),
                          command=show_single_staff_info)
 get_info_btn.place(relx=0.45, rely=0.13)
 
