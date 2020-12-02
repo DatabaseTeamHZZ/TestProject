@@ -99,6 +99,7 @@ tk.Label(tab1, text='请输入旧密码:', font=('潮字社国风冉宋简-闪',
 cashier_old_pwd = tk.StringVar()
 enter_old_pwd = tk.Entry(tab1, textvariable=cashier_old_pwd, font=('潮字社国风冉宋简-闪', 16), show='*')
 enter_old_pwd.place(relx=0.46, rely=0.2)
+
 tk.Label(tab1, text='请输入新密码:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.4)
 cashier_new_pwd = tk.StringVar()
 enter_new_pwd = tk.Entry(tab1, textvariable=cashier_new_pwd, font=('潮字社国风冉宋简-闪', 16), show='*')
@@ -127,6 +128,7 @@ tk.Label(tab2, text='请输入新用户名:', font=('潮字社国风冉宋简-�
 cashier_new_name = tk.StringVar()
 enter_new_name = tk.Entry(tab2, textvariable=cashier_new_name, font=('潮字社国风冉宋简-闪', 16))
 enter_new_name.place(relx=0.46, rely=0.2)
+
 tk.Label(tab2, text='请输入新手机号码:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.23, rely=0.4)
 cashier_new_phone = tk.StringVar()
 enter_new_phone = tk.Entry(tab2, textvariable=cashier_new_phone, font=('潮字社国风冉宋简-闪', 16))
@@ -151,10 +153,12 @@ tk.Label(tab3, text='请输入顾客id:', font=('潮字社国风冉宋简-闪', 
 customer_id = tk.StringVar()
 enter_customer_id = tk.Entry(tab3, textvariable=customer_id, font=('潮字社国风冉宋简-闪', 16))
 enter_customer_id.place(relx=0.46, rely=0.2)
+
 tk.Label(tab3, text='请输入商品id:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.35)
 goods_id = tk.StringVar()
 enter_goods_id = tk.Entry(tab3, textvariable=goods_id, font=('潮字社国风冉宋简-闪', 16))
 enter_goods_id.place(relx=0.46, rely=0.35)
+
 tk.Label(tab3, text='请输入交易数量:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.5)
 quantity = tk.StringVar()
 enter_quantity = tk.Entry(tab3, textvariable=quantity, font=('潮字社国风冉宋简-闪', 16))
@@ -180,6 +184,7 @@ tk.Label(tab4, text='请输入顾客id:', font=('潮字社国风冉宋简-闪', 
 customer_id2 = tk.StringVar()
 enter_customer_id2 = tk.Entry(tab4, textvariable=customer_id2, font=('潮字社国风冉宋简-闪', 16))
 enter_customer_id2.place(relx=0.46, rely=0.2)
+
 tk.Label(tab4, text='请输入购买点数:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.4)
 point0 = tk.StringVar()
 enter_point = tk.Entry(tab4, textvariable=point0, font=('潮字社国风冉宋简-闪', 16))
@@ -200,6 +205,7 @@ tk.Label(tab5, text='请输入顾客名称:', font=('潮字社国风冉宋简-�
 customer_name = tk.StringVar()
 enter_customer_name = tk.Entry(tab5, textvariable=customer_name, font=('潮字社国风冉宋简-闪', 16))
 enter_customer_name.place(relx=0.46, rely=0.2)
+
 tk.Label(tab5, text='请输入顾客电话:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.4)
 customer_phone = tk.StringVar()
 enter_customer_phone = tk.Entry(tab5, textvariable=customer_phone, font=('潮字社国风冉宋简-闪', 16))
@@ -248,6 +254,7 @@ tk.Label(tab6, text='请输入旧密码:', font=('潮字社国风冉宋简-闪',
 buyer_old_pwd = tk.StringVar()
 enter_buyer_old_pwd = tk.Entry(tab6, textvariable=buyer_old_pwd, font=('潮字社国风冉宋简-闪', 16), show='*')
 enter_buyer_old_pwd.place(relx=0.46, rely=0.2)
+
 tk.Label(tab6, text='请输入新密码:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.4)
 buyer_new_pwd = tk.StringVar()
 enter_buyer_new_pwd = tk.Entry(tab6, textvariable=buyer_new_pwd, font=('潮字社国风冉宋简-闪', 16), show='*')
@@ -285,8 +292,8 @@ enter_buyer_new_phone.place(relx=0.46, rely=0.4)
 
 def modifyBuyerInfo():
     connectlib.modify_buyer_info(uid,
-                                      enter_buyer_new_name.get(),
-                                      enter_buyer_new_phone.get())
+                                 enter_buyer_new_name.get(),
+                                 enter_buyer_new_phone.get())
     print(tk.messagebox.showinfo('修改成功', '个人信息修改成功！'))
 
 
@@ -299,14 +306,17 @@ tk.Label(tab8, text='请输入商品名称:', font=('潮字社国风冉宋简-�
 goods_name0 = tk.StringVar()
 enter_goods_name0 = tk.Entry(tab8, textvariable=goods_name0, font=('潮字社国风冉宋简-闪', 16))
 enter_goods_name0.place(relx=0.46, rely=0.2)
+
 tk.Label(tab8, text='请输入商品售价:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.35)
 goods_price0 = tk.StringVar()
 enter_goods_price0 = tk.Entry(tab8, textvariable=goods_price0, font=('潮字社国风冉宋简-闪', 16))
 enter_goods_price0.place(relx=0.46, rely=0.35)
+
 tk.Label(tab8, text='请输入商品成本:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.5)
 goods_cost0 = tk.StringVar()
 enter_goods_cost0 = tk.Entry(tab8, textvariable=goods_cost0, font=('潮字社国风冉宋简-闪', 16))
 enter_goods_cost0.place(relx=0.46, rely=0.5)
+
 tk.Label(tab8, text='请输入商品类型:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.65)
 goods_type0 = tk.StringVar()
 enter_goods_type0 = tk.Entry(tab8, textvariable=goods_type0, font=('潮字社国风冉宋简-闪', 16))
@@ -333,10 +343,7 @@ tk.Label(tab9, text='请输入商品id:', font=('潮字社国风冉宋简-闪', 
 goods_id2 = tk.StringVar()
 enter_goods_id2 = tk.Entry(tab9, textvariable=goods_id2, font=('潮字社国风冉宋简-闪', 16))
 enter_goods_id2.place(relx=0.46, rely=0.2)
-# tk.Label(tab9, text='请输入id:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.35)
-# buyer_id2 = tk.StringVar()
-# enter_buyer_id2 = tk.Entry(tab9, textvariable=buyer_id2, font=('潮字社国风冉宋简-闪', 16))
-# enter_buyer_id2.place(relx=0.46, rely=0.35)
+
 tk.Label(tab9, text='请输入进货数量:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.4)
 add_goods_quantity = tk.StringVar()
 enter_add_goods_quantity = tk.Entry(tab9, textvariable=add_goods_quantity, font=('潮字社国风冉宋简-闪', 16))
@@ -357,10 +364,6 @@ add_goods_quantity_btn = tk.Button(tab9, text='添加商品', font=('潮字社�
 add_goods_quantity_btn.place(relx=0.45, rely=0.6)
 
 # 5，查看商品库存
-# tk.Label(tab22, text='商品id:', font=('Arial', 13)).place(x=50, y=40)
-# goods_id4 = tk.StringVar()
-# enter_goods_id4 = tk.Entry(tab22, textvariable=goods_id4, font=('Arial', 14))
-# enter_goods_id4.place(x=200, y=40)
 
 tk.Label(tab22, text='请输入商品id:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.2)
 goods_id22 = tk.StringVar()
@@ -386,7 +389,7 @@ def showGoodsStock():
         tv.delete(item)
     full_str = connectlib.get_single_goods_info(enter_goods_id22.get())
     if full_str == 0 or full_str == '0':
-        print(tk.messagebox.showerror('查询错误','信息不存在！'))
+        print(tk.messagebox.showerror('查询错误', '信息不存在！'))
         return 0
     else:
         myStr = full_str.split()
@@ -446,6 +449,7 @@ tk.Label(tab10, text='请输入密码:', font=('潮字社国风冉宋简-闪', 1
 user_pwd = tk.StringVar()
 enter_user_pwd = tk.Entry(tab10, textvariable=user_pwd, font=('潮字社国风冉宋简-闪', 16), show='*')
 enter_user_pwd.place(relx=0.46, rely=0.2)
+
 tk.Label(tab10, text='请输入用户类型:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.4)
 new_user_type = tk.StringVar()
 enter_new_user_type = tk.Entry(tab10, textvariable=new_user_type, font=('潮字社国风冉宋简-闪', 16))
@@ -492,7 +496,7 @@ def getCusInfo():
         tv1.delete(item5)
     full_str = connectlib.get_customers_info()
     if full_str == 0 or full_str == '0':
-        print(tk.messagebox.showerror('查询错误','信息不存在！'))
+        print(tk.messagebox.showerror('查询错误', '信息不存在！'))
         return 0
     else:
         myStr = full_str.split()
@@ -601,6 +605,7 @@ tk.Label(tab14, text='起始时间:', font=('潮字社国风冉宋简-闪', 16))
 start_time = tk.StringVar()
 enter_start_time = tk.Entry(tab14, textvariable=start_time, font=('潮字社国风冉宋简-闪', 16))
 enter_start_time.place(relx=0.42, rely=0.2)
+
 tk.Label(tab14, text='截止时间:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.3)
 end_time = tk.StringVar()
 enter_end_time = tk.Entry(tab14, textvariable=end_time, font=('潮字社国风冉宋简-闪', 16))
@@ -641,7 +646,7 @@ def showAllSale():
     for item5 in x:
         tv3.delete(item5)
     full_str = connectlib.get_sale_in_period(enter_odr, t, enter_start_time.get(),
-                                          enter_end_time.get())
+                                             enter_end_time.get())
     if full_str == 0 or full_str == '0':
         print(tk.messagebox.showerror('查询错误', '信息不存在！'))
         return 0
@@ -666,10 +671,12 @@ tk.Label(tab15, text='起始时间:', font=('潮字社国风冉宋简-闪', 16))
 vip_start_time = tk.StringVar()
 enter_vip_start_time = tk.Entry(tab15, textvariable=vip_start_time, font=('潮字社国风冉宋简-闪', 16))
 enter_vip_start_time.place(relx=0.44, rely=0.05)
+
 tk.Label(tab15, text='截止时间:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.15)
 vip_end_time = tk.StringVar()
 enter_vip_end_time = tk.Entry(tab15, textvariable=vip_end_time, font=('潮字社国风冉宋简-闪', 16))
 enter_vip_end_time.place(relx=0.44, rely=0.15)
+
 tv4 = ttk.Treeview(tab15, show='headings',
                    column=('customer_id', 'customer_name', 'phone', 'goods_id', 'quantity', 'time', 'payment', 'vip'))
 tv4.column('customer_id', width=150, anchor="center")
@@ -697,7 +704,7 @@ def show_vip_purchase():
     for item5 in x:
         tv4.delete(item5)
     full_str = connectlib.get_vip_sale_in_period(enter_vip_start_time.get(),
-                                              enter_vip_end_time.get())
+                                                 enter_vip_end_time.get())
     if full_str == 0 or full_str == '0':
         print(tk.messagebox.showerror('查询错误', '信息不存在！'))
         return 0
@@ -763,18 +770,22 @@ tk.Label(tab17, text='商品id:', font=('潮字社国风冉宋简-闪', 16)).pla
 goods_id4 = tk.StringVar()
 enter_goods_id4 = tk.Entry(tab17, textvariable=goods_id4, font=('潮字社国风冉宋简-闪', 16))
 enter_goods_id4.place(relx=0.46, rely=0.05)
+
 tk.Label(tab17, text='商品新名称:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.15)
 new_goods_name = tk.StringVar()
 enter_new_goods_name = tk.Entry(tab17, textvariable=new_goods_name, font=('潮字社国风冉宋简-闪', 16))
 enter_new_goods_name.place(relx=0.46, rely=0.15)
+
 tk.Label(tab17, text='商品新售价:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.25)
 new_price = tk.StringVar()
 enter_new_price = tk.Entry(tab17, textvariable=new_price, font=('潮字社国风冉宋简-闪', 16))
 enter_new_price.place(relx=0.46, rely=0.25)
+
 tk.Label(tab17, text='商品新成本:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.35)
 new_cost = tk.StringVar()
 enter_new_cost = tk.Entry(tab17, textvariable=new_cost, font=('潮字社国风冉宋简-闪', 16))
 enter_new_cost.place(relx=0.46, rely=0.35)
+
 tk.Label(tab17, text='商品新数量:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.45)
 new_quantity = tk.StringVar()
 enter_new_quantity = tk.Entry(tab17, textvariable=new_quantity, font=('潮字社国风冉宋简-闪', 16))
@@ -824,7 +835,7 @@ def show_every_type_sum_profit():
     for item in x:
         tv6.delete(item)
     full_str = connectlib.get_type_profit(enter_start_time1.get(),
-                                       enter_end_time1.get())
+                                          enter_end_time1.get())
     if full_str == 0 or full_str == '0':
         print(tk.messagebox.showerror('查询错误', '信息不存在！'))
         return 0
@@ -844,15 +855,16 @@ get_profit_rank_btn.place(relx=0.45, rely=0.23)
 
 #   10.查询所有顾客的在一定时间内的总消费排名
 
-
 tk.Label(tab19, text='开始时间:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.05)
 start_time2 = tk.StringVar()
 enter_start_time2 = tk.Entry(tab19, textvariable=start_time2, font=('潮字社国风冉宋简-闪', 16))
 enter_start_time2.place(relx=0.44, rely=0.05)
+
 tk.Label(tab19, text='结束时间:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.15)
 end_time2 = tk.StringVar()
 enter_end_time2 = tk.Entry(tab19, textvariable=end_time2, font=('潮字社国风冉宋简-闪', 16))
 enter_end_time2.place(relx=0.44, rely=0.15)
+
 tv7 = ttk.Treeview(tab19, show='headings', column=('rank', 'customer_name', 'customer_id'))
 tv7.column('rank', width=150, anchor="center")
 tv7.column('customer_name', width=150, anchor="center")
@@ -863,13 +875,12 @@ tv7.heading('customer_name', text='顾客姓名')
 tv7.heading('customer_id', text='顾客id')
 tv7.place(rely=0.35, relwidth=1, relheight=0.8)
 
-
 def show_every_customer_sum_payment():
     x = tv7.get_children()
     for item in x:
         tv7.delete(item)
     full_str = connectlib.get_customer_consume_rank(enter_start_time2.get(),
-                                                 enter_end_time2.get())
+                                                    enter_end_time2.get())
     if full_str == 0 or full_str == '0':
         print(tk.messagebox.showerror('查询错误', '信息不存在！'))
         return 0
@@ -888,12 +899,11 @@ get_buy_rank_btn = tk.Button(tab19, text='消费排名', font=('潮字社国风�
 get_buy_rank_btn.place(relx=0.45, rely=0.23)
 
 #   11.查询一个特定的顾客的vip点获得记录
-
-
 tk.Label(tab20, text='顾客id:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.05)
 vip_id = tk.StringVar()
 enter_vip_id = tk.Entry(tab20, textvariable=vip_id, font=('潮字社国风冉宋简-闪', 16))
 enter_vip_id.place(relx=0.44, rely=0.05)
+
 tv8 = ttk.Treeview(tab20, show='headings', column=('time', 'get_point', 'way_name'))
 tv8.column('time', width=150, anchor="center")
 tv8.column('get_point', width=150, anchor="center")
@@ -902,9 +912,7 @@ tv8.column('way_name', width=150, anchor="center")
 tv8.heading('time', text='获得时间')
 tv8.heading('get_point', text='获得点数')
 tv8.heading('way_name', text='获得方式')
-
 tv8.place(rely=0.25, relwidth=1, relheight=0.8)
-
 
 def show_single_customer_point():
     x = tv8.get_children()
@@ -923,14 +931,11 @@ def show_single_customer_point():
                            value=[myStr[tem] + ' ' + myStr[tem + 1], myStr[tem + 2], myStr[tem + 3]])
             tem = tem + 4
 
-
 vip_point_btn = tk.Button(tab20, text='查询获得记录', font=('潮字社国风冉宋简-闪', 16),
                           command=show_single_customer_point)
 vip_point_btn.place(relx=0.45, rely=0.13)
 
 #   12.查询某一未注销员工的个人信息
-
-
 tk.Label(tab21, text='员工id:', font=('潮字社国风冉宋简-闪', 16)).place(relx=0.25, rely=0.05)
 customer_id3 = tk.StringVar()
 enter_customer_id3 = tk.Entry(tab21, textvariable=customer_id3, font=('潮字社国风冉宋简-闪', 16))
@@ -962,6 +967,7 @@ def show_single_staff_info():
                 tv9.insert('', 'end',
                            value=[myStr[tem], myStr[tem + 1], myStr[tem + 2]])
             tem = tem + 3
+
 
 get_info_btn = tk.Button(tab21, text='查询信息', font=('潮字社国风冉宋简-闪', 16),
                          command=show_single_staff_info)
@@ -1015,5 +1021,4 @@ elif type_user == 3:
     tab19.destroy()
     tab20.destroy()
     tab21.destroy()
-
 root.mainloop()
